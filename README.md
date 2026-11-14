@@ -145,7 +145,6 @@ cd Agentra
 pip install -r requirements.txt
 
 cp .env.example .env        # Windows: copy .env.example .env
-# edit .env and add GROQ_API_KEY and TAVILY_API_KEY (never commit this file)
 
 python scripts/groq_check.py            # confirms your keys and models work
 uvicorn app.main:app --port 8100
@@ -200,6 +199,6 @@ The combination is the subject of a planned patent application.
 
 ## Team and acknowledgements
 
-Capstone team 37: **Aruthra Vimala K L** and **Advaith R**. Guide: Dr. K. Sathyarakasekaran. The separate ASIDE security service is the teammate-owned half of the earlier pipeline.
+**Aruthra Vimala K L** and **Advaith R**
 
 Built on public work including Cherep et al. (2025), AgentDojo, WASP, InjecAgent, OPeRA, Greshake et al. (2023), Ott et al. (2011) and Ustun & Rudin (2019).
