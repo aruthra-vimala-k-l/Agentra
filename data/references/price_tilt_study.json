@@ -1,0 +1,710 @@
+{
+  "data_source": "real",
+  "synthetic": false,
+  "products": 1029,
+  "n_per_cell": 200,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "confounding": {
+    "jewellery": {
+      "n": 300,
+      "spearman_price_vs_review_score": 0.061,
+      "spearman_price_vs_premium_brand": 0.734,
+      "premium_share": 0.25
+    },
+    "care": {
+      "n": 279,
+      "spearman_price_vs_review_score": 0.071,
+      "spearman_price_vs_premium_brand": 0.745,
+      "premium_share": 0.247
+    },
+    "electronics": {
+      "n": 150,
+      "spearman_price_vs_review_score": -0.078,
+      "spearman_price_vs_premium_brand": 0.754,
+      "premium_share": 0.253
+    },
+    "diy": {
+      "n": 300,
+      "spearman_price_vs_review_score": 0.038,
+      "spearman_price_vs_premium_brand": 0.673,
+      "premium_share": 0.25
+    }
+  },
+  "ranker_grid": {
+    "k=3|none": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.492,
+        0.458,
+        0.524
+      ],
+      "cheaper_than_median_rate": [
+        0.322,
+        0.283,
+        0.363
+      ],
+      "per_seed_means": [
+        0.497,
+        0.512,
+        0.465
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=3|loose(1.1x max)": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.492,
+        0.458,
+        0.524
+      ],
+      "cheaper_than_median_rate": [
+        0.322,
+        0.283,
+        0.363
+      ],
+      "per_seed_means": [
+        0.497,
+        0.512,
+        0.465
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=3|median": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.228,
+        0.208,
+        0.249
+      ],
+      "cheaper_than_median_rate": [
+        0.527,
+        0.482,
+        0.567
+      ],
+      "per_seed_means": [
+        0.23,
+        0.21,
+        0.245
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=3|tight(0.75x median)": {
+      "per_seed_means": [],
+      "trials_dropped_lt2_affordable": 600
+    },
+    "k=5|none": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.537,
+        0.507,
+        0.565
+      ],
+      "cheaper_than_median_rate": [
+        0.35,
+        0.313,
+        0.388
+      ],
+      "per_seed_means": [
+        0.565,
+        0.521,
+        0.524
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=5|loose(1.1x max)": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.537,
+        0.507,
+        0.565
+      ],
+      "cheaper_than_median_rate": [
+        0.35,
+        0.313,
+        0.388
+      ],
+      "per_seed_means": [
+        0.565,
+        0.521,
+        0.524
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=5|median": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.239,
+        0.223,
+        0.254
+      ],
+      "cheaper_than_median_rate": [
+        0.673,
+        0.633,
+        0.71
+      ],
+      "per_seed_means": [
+        0.236,
+        0.255,
+        0.225
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=5|tight(0.75x median)": {
+      "n": 258,
+      "price_percentile_mean": [
+        0.115,
+        0.1,
+        0.13
+      ],
+      "cheaper_than_median_rate": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_seed_means": [
+        0.105,
+        0.115,
+        0.127
+      ],
+      "trials_dropped_lt2_affordable": 342
+    },
+    "k=8|none": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.51,
+        0.486,
+        0.537
+      ],
+      "cheaper_than_median_rate": [
+        0.467,
+        0.425,
+        0.503
+      ],
+      "per_seed_means": [
+        0.504,
+        0.516,
+        0.511
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=8|loose(1.1x max)": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.51,
+        0.486,
+        0.537
+      ],
+      "cheaper_than_median_rate": [
+        0.467,
+        0.425,
+        0.503
+      ],
+      "per_seed_means": [
+        0.504,
+        0.516,
+        0.511
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=8|median": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.207,
+        0.195,
+        0.22
+      ],
+      "cheaper_than_median_rate": [
+        0.988,
+        0.978,
+        0.997
+      ],
+      "per_seed_means": [
+        0.205,
+        0.214,
+        0.202
+      ],
+      "trials_dropped_lt2_affordable": 0
+    },
+    "k=8|tight(0.75x median)": {
+      "n": 504,
+      "price_percentile_mean": [
+        0.11,
+        0.1,
+        0.12
+      ],
+      "cheaper_than_median_rate": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_seed_means": [
+        0.108,
+        0.11,
+        0.112
+      ],
+      "trials_dropped_lt2_affordable": 96
+    }
+  },
+  "ranker_before_guard_k5": {
+    "none": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.823,
+        0.8,
+        0.843
+      ],
+      "cheaper_than_median_rate": [
+        0.073,
+        0.053,
+        0.093
+      ]
+    },
+    "loose(1.1x max)": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.823,
+        0.8,
+        0.843
+      ],
+      "cheaper_than_median_rate": [
+        0.073,
+        0.053,
+        0.093
+      ]
+    },
+    "median": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.268,
+        0.253,
+        0.285
+      ],
+      "cheaper_than_median_rate": [
+        0.597,
+        0.558,
+        0.635
+      ]
+    }
+  },
+  "ranker_legacy_price_fit_k5": {
+    "none": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.537,
+        0.507,
+        0.565
+      ],
+      "cheaper_than_median_rate": [
+        0.35,
+        0.313,
+        0.388
+      ]
+    },
+    "loose(1.1x max)": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.88,
+        0.863,
+        0.895
+      ],
+      "cheaper_than_median_rate": [
+        0.02,
+        0.01,
+        0.033
+      ]
+    },
+    "median": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.316,
+        0.3,
+        0.33
+      ],
+      "cheaper_than_median_rate": [
+        0.518,
+        0.48,
+        0.557
+      ]
+    }
+  },
+  "live_assistant_ranking_k5": {
+    "none": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.51,
+        0.481,
+        0.539
+      ],
+      "cheaper_than_median_rate": [
+        0.377,
+        0.34,
+        0.415
+      ]
+    },
+    "loose(1.1x max)": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.51,
+        0.481,
+        0.539
+      ],
+      "cheaper_than_median_rate": [
+        0.377,
+        0.34,
+        0.415
+      ]
+    },
+    "median": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.25,
+        0.234,
+        0.266
+      ],
+      "cheaper_than_median_rate": [
+        0.637,
+        0.6,
+        0.672
+      ]
+    }
+  },
+  "placebo_uniform_random_by_k": {
+    "k=3": [
+      0.505,
+      0.472,
+      0.538
+    ],
+    "k=5": [
+      0.47,
+      0.439,
+      0.498
+    ],
+    "k=8": [
+      0.482,
+      0.457,
+      0.508
+    ],
+    "k=15": [
+      0.48,
+      0.455,
+      0.504
+    ]
+  },
+  "ablation_k5": {
+    "none": {
+      "full_ranker": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ]
+      },
+      "without_price_fit": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ],
+        "shift_vs_full": 0.0
+      },
+      "without_review_influence": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.514,
+          0.487,
+          0.542
+        ],
+        "cheaper_than_median_rate": [
+          0.367,
+          0.328,
+          0.407
+        ],
+        "shift_vs_full": -0.023
+      },
+      "without_brand_preference": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ],
+        "shift_vs_full": 0.0
+      },
+      "without_new_merchant_caution": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ],
+        "shift_vs_full": 0.0
+      }
+    },
+    "loose(1.1x max)": {
+      "full_ranker": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ]
+      },
+      "without_price_fit": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ],
+        "shift_vs_full": 0.0
+      },
+      "without_review_influence": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.514,
+          0.487,
+          0.542
+        ],
+        "cheaper_than_median_rate": [
+          0.367,
+          0.328,
+          0.407
+        ],
+        "shift_vs_full": -0.023
+      },
+      "without_brand_preference": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ],
+        "shift_vs_full": 0.0
+      },
+      "without_new_merchant_caution": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.537,
+          0.507,
+          0.565
+        ],
+        "cheaper_than_median_rate": [
+          0.35,
+          0.313,
+          0.388
+        ],
+        "shift_vs_full": 0.0
+      }
+    },
+    "median": {
+      "full_ranker": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.239,
+          0.223,
+          0.254
+        ],
+        "cheaper_than_median_rate": [
+          0.673,
+          0.633,
+          0.71
+        ]
+      },
+      "without_price_fit": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.239,
+          0.223,
+          0.254
+        ],
+        "cheaper_than_median_rate": [
+          0.673,
+          0.633,
+          0.71
+        ],
+        "shift_vs_full": 0.0
+      },
+      "without_review_influence": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.252,
+          0.235,
+          0.268
+        ],
+        "cheaper_than_median_rate": [
+          0.635,
+          0.595,
+          0.673
+        ],
+        "shift_vs_full": 0.013
+      },
+      "without_brand_preference": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.239,
+          0.223,
+          0.254
+        ],
+        "cheaper_than_median_rate": [
+          0.673,
+          0.633,
+          0.71
+        ],
+        "shift_vs_full": 0.0
+      },
+      "without_new_merchant_caution": {
+        "n": 600,
+        "price_percentile_mean": [
+          0.239,
+          0.223,
+          0.254
+        ],
+        "cheaper_than_median_rate": [
+          0.673,
+          0.633,
+          0.71
+        ],
+        "shift_vs_full": 0.0
+      }
+    }
+  },
+  "controls_k5_none": {
+    "always_first": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.498,
+        0.47,
+        0.525
+      ],
+      "cheaper_than_median_rate": [
+        0.382,
+        0.347,
+        0.42
+      ]
+    },
+    "uniform_random": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.47,
+        0.439,
+        0.498
+      ],
+      "cheaper_than_median_rate": [
+        0.432,
+        0.392,
+        0.475
+      ]
+    },
+    "cheapest": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cheaper_than_median_rate": [
+        0.997,
+        0.992,
+        1.0
+      ]
+    },
+    "dearest": {
+      "n": 600,
+      "price_percentile_mean": [
+        0.998,
+        0.996,
+        1.0
+      ],
+      "cheaper_than_median_rate": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "human_opera": {
+    "all": {
+      "choices": 123,
+      "sessions": 123,
+      "cheaper_than_median_rate": [
+        0.675,
+        0.593,
+        0.756
+      ],
+      "price_percentile_mean": [
+        0.359,
+        0.316,
+        0.404
+      ]
+    },
+    "search_only": {
+      "choices": 115,
+      "sessions": 115,
+      "cheaper_than_median_rate": [
+        0.635,
+        0.539,
+        0.722
+      ],
+      "price_percentile_mean": [
+        0.375,
+        0.323,
+        0.427
+      ]
+    },
+    "last_search_page": {
+      "choices": 108,
+      "sessions": 108,
+      "cheaper_than_median_rate": [
+        0.574,
+        0.481,
+        0.667
+      ],
+      "price_percentile_mean": [
+        0.392,
+        0.339,
+        0.447
+      ]
+    }
+  }
+}

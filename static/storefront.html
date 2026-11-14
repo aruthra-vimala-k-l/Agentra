@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TrendMart -- Mock External Storefront</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, sans-serif; background: #0d1117; color: #e6edf3; margin: 0; padding: 24px 32px; }
+    h1 { font-size: 20px; margin-bottom: 4px; }
+    .subtitle { color: #8b949e; font-size: 13px; margin-bottom: 24px; max-width: 720px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+             background: #d29922; color: #0d1117; margin-bottom: 8px; }
+    .name { font-size: 15px; font-weight: 600; }
+    .price { color: #8b949e; font-size: 13px; margin: 4px 0 8px; }
+    .stars { color: #d29922; font-size: 14px; }
+    .authenticity { margin-top: 10px; padding: 8px 10px; border-radius: 6px; font-size: 12px; }
+    .authenticity.clean { background: #0d2818; color: #3fb950; }
+    .authenticity.suspicious { background: #2d1214; color: #f85149; }
+    .authenticity ul { margin: 4px 0 0 16px; padding: 0; }
+    details { margin-top: 10px; }
+    summary { cursor: pointer; font-size: 12px; color: #8b949e; }
+    .review { font-size: 12px; border-top: 1px solid #21262d; padding: 6px 0; }
+    .review .meta { color: #8b949e; }
+  </style>
+</head>
+<body>
+  <h1>TrendMart</h1>
+  <p class="subtitle">
+    A mock external storefront -- what Agentra's Catalogue Ingestion Layer pulls its shortlist candidates
+    from, alongside the hand-authored catalogue. Each listing's review authenticity check is shown here for
+    transparency, the same signal the shopping agent sees at checkout.
+  </p>
+  <div class="grid" id="listings"></div>
+
+  <script>
+    function stars(score) {
+      const full = Math.round(score);
+      return "&#9733;".repeat(full) + "&#9734;".repeat(5 - full) + ` (${score.toFixed(1)})`;
+    }
+
+    async function load() {
+      const res = await fetch("/storefront/listings");
+      const data = await res.json();
+      const grid = document.getElementById("listings");
+      grid.innerHTML = data.listings.map((p) => {
+        const a = p.review_authenticity;
+        const authClass = a.suspicious ? "suspicious" : "clean";
+        const authLabel = a.suspicious ? "Review authenticity: flagged" : "Review authenticity: looks organic";
+        const reasons = (a.reasons || []).map((r) => `<li>${r}</li>`).join("");
+        const reviews = (p.reviews || []).map((r) => `
+          <div class="review">
+            <div>"${r.text}"</div>
+            <div class="meta">${r.reviewer} &middot; ${r.rating}&#9733; &middot; ${new Date(r.timestamp).toLocaleDateString()}</div>
+          </div>
+        `).join("");
+        return `
+          <div class="card">
+            ${p.promoted ? '<div class="badge">BESTSELLER</div>' : ""}
+            <div class="name">${p.name}</div>
+            <div class="price">&#8377;${p.price.toLocaleString("en-IN")} &middot; ${p.merchant}${p.is_new_merchant ? " (new merchant)" : ""}</div>
+            <div class="stars">${stars(p.review_score)}</div>
+            <div class="authenticity ${authClass}">
+              ${authLabel}
+              ${reasons ? `<ul>${reasons}</ul>` : ""}
+            </div>
+            <details>
+              <summary>${(p.reviews || []).length} reviews</summary>
+              ${reviews}
+            </details>
+          </div>
+        `;
+      }).join("");
+    }
+
+    load();
+  </script>
+</body>
+</html>

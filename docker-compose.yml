@@ -1,0 +1,28 @@
+name: agentra
+
+# This compose file assumes ASIDE's own repo (aside_refactor, with its own
+# docker-compose.yml) is checked out as a sibling directory:
+#
+#   parent/
+#     agentra_shopping_agent/   <- this repo
+#     aside_refactor/           <- ASIDE's repo
+#
+# Run `docker compose up` from `parent/` referencing both compose files, or
+# simply run ASIDE's own stack first (docker compose up in aside_refactor)
+# and then this service alone with ASIDE_BASE_URL pointing at it -- that is
+# the two-independent-services model the architecture is built on (see
+# README.md "Why two repos, not one").
+
+services:
+  agent:
+    build: .
+    environment:
+      ASIDE_BASE_URL: ${ASIDE_BASE_URL:-http://host.docker.internal:8000}
+      # Optional shared-secret auth header sent to ASIDE (see SECURITY_NOTES.md
+      # -- ASIDE's own repo needs a matching check for this to actually gate
+      # anything; unset by default so the demo works without it).
+      ASIDE_API_KEY: ${ASIDE_API_KEY:-}
+    ports:
+      - "8100:8100"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

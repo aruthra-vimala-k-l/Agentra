@@ -1,0 +1,44 @@
+{
+  "all": {
+    "choices": 123,
+    "sessions": 123,
+    "cheaper_than_median_rate": [
+      0.675,
+      0.593,
+      0.756
+    ],
+    "price_percentile_mean": [
+      0.359,
+      0.316,
+      0.404
+    ]
+  },
+  "search_only": {
+    "choices": 115,
+    "sessions": 115,
+    "cheaper_than_median_rate": [
+      0.635,
+      0.539,
+      0.722
+    ],
+    "price_percentile_mean": [
+      0.375,
+      0.323,
+      0.427
+    ]
+  },
+  "last_search_page": {
+    "choices": 108,
+    "sessions": 108,
+    "cheaper_than_median_rate": [
+      0.574,
+      0.481,
+      0.667
+    ],
+    "price_percentile_mean": [
+      0.392,
+      0.339,
+      0.447
+    ]
+  }
+}

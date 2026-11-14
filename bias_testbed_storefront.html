@@ -1,0 +1,1505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MartVerse</title>
+<style>
+  :root {
+    --bg: #ffffff; --ink: #0f1111; --muted: #565959; --border: #d5d9d9;
+    --accent: #febd69; --accent-dark: #e77600; --nav: #131921; --nav2: #232f3e;
+    --card: #ffffff; --good: #067d62; --bad: #b12704; --line: #e3e6e6;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Amazon Ember", Arial, Helvetica, sans-serif; background: #eaeded; color: var(--ink); }
+
+  /* ---------- Header ---------- */
+  header.top { background: var(--nav); color: #fff; display: flex; align-items: center; gap: 16px; padding: 10px 16px; }
+  .brand { font-size: 22px; font-weight: 700; color: #fff; text-decoration: none; white-space: nowrap; }
+  .brand span { color: var(--accent); }
+  .search-wrap { flex: 1; display: flex; max-width: 720px; }
+  .search-wrap input { flex: 1; border: none; padding: 10px 12px; font-size: 14px; border-radius: 4px 0 0 4px; outline: none; }
+  .search-wrap button { background: var(--accent); border: none; padding: 0 16px; border-radius: 0 4px 4px 0; cursor: pointer; font-size: 16px; }
+  .cart-btn { background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; position: relative; padding: 6px 10px; }
+  .cart-btn .count { background: var(--accent); color: #111; font-weight: 700; border-radius: 50%; padding: 1px 7px; font-size: 12px; }
+  nav.categories { background: var(--nav2); color: #fff; display: flex; gap: 4px; padding: 8px 16px; overflow-x: auto; }
+  nav.categories button { background: none; border: none; color: #fff; font-size: 13px; padding: 6px 12px; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+  nav.categories button:hover, nav.categories button.active { background: rgba(255,255,255,0.15); }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar { max-width: 1200px; margin: 16px auto 0; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; }
+  .toolbar h2 { font-size: 18px; margin: 0; }
+  .toolbar select { padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: #fff; }
+
+  /* ---------- Product grid ---------- */
+  .grid { max-width: 1200px; margin: 12px auto 40px; padding: 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; cursor: pointer; transition: box-shadow 0.15s; position: relative; }
+  .card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.12); }
+  .card .imgbox { width: 100%; height: 130px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 10px; }
+  .card .imgbox img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+  .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .bestseller-badge { background: var(--accent-dark); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 3px; letter-spacing: 0.03em; }
+  .card .name { font-size: 13.5px; line-height: 1.3; margin: 0 0 6px; min-height: 34px; }
+  .stars { color: var(--accent-dark); font-size: 13px; }
+  .review-count { color: #007185; font-size: 12px; margin-left: 4px; }
+  .price { font-size: 18px; font-weight: 600; margin: 6px 0 8px; }
+  .price small { font-size: 12px; font-weight: 400; color: var(--muted); }
+  .add-btn { width: 100%; background: var(--accent); border: 1px solid #a88734; border-radius: 20px; padding: 7px 0; font-size: 13px; cursor: pointer; }
+  .add-btn:hover { background: #f3a847; }
+
+  .dev-badges { position: absolute; top: 8px; right: 8px; display: none; flex-direction: column; gap: 4px; align-items: flex-end; }
+  body.dev-mode .dev-badges { display: flex; }
+  .dev-chip { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px; color: #fff; }
+  .dev-chip.good { background: var(--good); }
+  .dev-chip.bad { background: var(--bad); }
+  .dev-chip.authentic { background: #0b5fff; }
+  .dev-chip.fabricated { background: #8a2be2; }
+
+  /* ---------- Modal (product detail) ---------- */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-start; justify-content: center; z-index: 100; overflow-y: auto; padding: 30px 16px; }
+  .overlay.show { display: flex; }
+  .modal { background: #fff; border-radius: 10px; max-width: 780px; width: 100%; padding: 24px; position: relative; }
+  .modal .close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); }
+  .modal-top { display: flex; gap: 20px; flex-wrap: wrap; }
+  .modal-img { width: 220px; height: 220px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 90px; flex-shrink: 0; }
+  .modal-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+  .modal-info { flex: 1; min-width: 220px; }
+  .modal-info h2 { margin: 0 0 8px; font-size: 20px; }
+  .modal-desc { font-size: 13.5px; color: #222; margin: 12px 0; line-height: 1.5; }
+  .modal-add { background: var(--accent); border: 1px solid #a88734; border-radius: 20px; padding: 10px 26px; font-size: 14px; cursor: pointer; margin-top: 10px; }
+  .modal-add:hover { background: #f3a847; }
+  .reviews-section { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+  .reviews-section h3 { font-size: 15px; margin: 0 0 12px; }
+  .review { border-bottom: 1px solid #f0f1f1; padding: 10px 0; }
+  .review .rmeta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .review .rname { font-weight: 600; font-size: 13px; }
+  .review .rtext { font-size: 13px; margin-top: 6px; line-height: 1.45; }
+
+  /* ---------- Cart drawer ---------- */
+  .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; z-index: 200; }
+  .drawer-overlay.show { display: block; }
+  .drawer { position: fixed; top: 0; right: -420px; width: 400px; max-width: 92vw; height: 100%; background: #fff; z-index: 201; transition: right 0.25s ease; display: flex; flex-direction: column; box-shadow: -2px 0 12px rgba(0,0,0,0.2); }
+  .drawer.show { right: 0; }
+  .drawer-head { padding: 16px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+  .drawer-head h3 { margin: 0; font-size: 16px; }
+  .drawer-head button { background: none; border: none; font-size: 20px; cursor: pointer; }
+  .drawer-items { flex: 1; overflow-y: auto; padding: 12px 16px; }
+  .cart-line { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f1f1; }
+  .cart-line .imgbox { width: 56px; height: 56px; font-size: 24px; flex-shrink: 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+  .cart-line .imgbox img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+  .cart-line .cl-info { flex: 1; }
+  .cart-line .cl-name { font-size: 12.5px; margin-bottom: 4px; }
+  .cart-line .cl-controls { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .cart-line .cl-controls button { border: 1px solid var(--border); background: #f0f2f2; border-radius: 4px; width: 22px; height: 22px; cursor: pointer; }
+  .cart-line .remove { color: #007185; cursor: pointer; text-decoration: underline; font-size: 12px; margin-left: 8px; }
+  .drawer-foot { padding: 16px; border-top: 1px solid var(--line); }
+  .subtotal { font-size: 15px; margin-bottom: 10px; }
+  .checkout-btn { width: 100%; background: var(--accent); border: 1px solid #a88734; border-radius: 20px; padding: 10px 0; font-size: 14px; cursor: pointer; }
+  .checkout-btn:hover { background: #f3a847; }
+  .empty-cart { color: var(--muted); font-size: 13px; text-align: center; margin-top: 40px; }
+
+  /* ---------- Checkout confirmation modal ---------- */
+  .confirm-modal { max-width: 420px; text-align: center; }
+  .confirm-modal .tick { font-size: 46px; color: var(--good); }
+  .confirm-modal h2 { margin: 10px 0 6px; font-size: 19px; }
+  .confirm-modal .order-id { font-family: monospace; background: #f0f2f2; padding: 8px 12px; border-radius: 6px; display: inline-block; margin: 10px 0; font-size: 14px; }
+  .confirm-modal button { margin-top: 16px; background: var(--nav); color: #fff; border: none; border-radius: 20px; padding: 10px 24px; cursor: pointer; font-size: 13px; }
+
+  /* ---------- Dev toggle ---------- */
+  .dev-toggle { position: fixed; bottom: 10px; right: 10px; z-index: 300; background: #222; color: #aaa; border: 1px solid #444; border-radius: 6px; font-size: 11px; padding: 6px 10px; cursor: pointer; opacity: 0.55; }
+  .dev-toggle:hover { opacity: 1; }
+  .dev-toggle.active { background: #0b5fff; color: #fff; opacity: 1; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="#" class="brand">Mart<span>Verse</span></a>
+  <div class="search-wrap">
+    <input type="text" placeholder="Search MartVerse (not functional -- demo only)" />
+    <button>&#128269;</button>
+  </div>
+  <button class="cart-btn" id="cartToggle">
+    &#128722; Cart <span class="count" id="cartCount">0</span>
+  </button>
+</header>
+
+<nav class="categories" id="categoryNav"></nav>
+
+<div class="toolbar">
+  <h2 id="categoryTitle">All products</h2>
+  <select id="sortSelect">
+    <option value="featured">Sort: Featured</option>
+    <option value="rating">Sort: Avg. Customer Rating</option>
+    <option value="reviews">Sort: Most Reviews</option>
+    <option value="price">Sort: Price: Low to High</option>
+  </select>
+</div>
+
+<div class="grid" id="productGrid"></div>
+
+<!-- Product detail modal -->
+<div class="overlay" id="productOverlay">
+  <div class="modal" id="productModal"></div>
+</div>
+
+<!-- Cart drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <h3>Your Cart</h3>
+    <button id="drawerClose">&times;</button>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <div class="subtotal">Subtotal: <strong id="subtotal">&#8377;0</strong></div>
+    <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- Checkout confirmation modal -->
+<div class="overlay" id="checkoutOverlay">
+  <div class="modal confirm-modal">
+    <button class="close" id="checkoutClose">&times;</button>
+    <div class="tick">&#10003;</div>
+    <h2>Order placed!</h2>
+    <p>Thanks for shopping with MartVerse. This is a mock checkout -- no payment was processed.</p>
+    <div class="order-id" id="orderIdDisplay"></div>
+    <div><button id="checkoutDone">Continue shopping</button></div>
+  </div>
+</div>
+
+<button class="dev-toggle" id="devToggle">dev: ground truth off</button>
+
+<script>
+/* =========================================================================
+   MartVerse -- a bias-testbed storefront for demoing a shopping agent
+   against surface-level manipulation (bestseller badges, star ratings,
+   fabricated reviews) versus genuine product/review quality.
+
+   Everything below is static/mock: no backend, no real payment, no real
+   images. Swap PRODUCT_IMAGE_URL for a data: URI to give every card a
+   single shared placeholder photo instead of the emoji/color boxes.
+   ========================================================================= */
+
+const PRODUCT_IMAGE_URL = ""; // e.g. "data:image/png;base64,...." to enable
+
+const CATEGORIES = [
+  { key: "electronics", label: "Electronics", emoji: "\u{1F4BB}", color: "#e8f0fe" },
+  { key: "clothing",    label: "Clothing",    emoji: "\u{1F455}", color: "#fdeeee" },
+  { key: "jewelry",     label: "Jewelry",     emoji: "\u{1F48D}", color: "#fff6e0" },
+  { key: "diy",         label: "DIY & Home",  emoji: "\u{1F6E0}️", color: "#eafaf0" },
+  { key: "beauty",      label: "Beauty",      emoji: "\u{1F484}", color: "#fbeaf6" },
+];
+</script>
+
+<script type="application/json" id="martverse-catalog-data">
+[
+  {
+    "id": "e-601",
+    "cat": "electronics",
+    "agentra_category": "electronics",
+    "name": "SoundMax Bluetooth Speaker",
+    "price": 1899,
+    "bestseller": true,
+    "rating": 2.2,
+    "reviewCount": 386,
+    "good": false,
+    "authentic": true,
+    "desc": "Portable Bluetooth speaker with 10-hour rated battery life.",
+    "reviews": [
+      {
+        "name": "Ankita Sharma",
+        "date": "2026-05-14T10:20:00",
+        "rating": 2,
+        "text": "Battery barely lasts 2 hours after a month of use, way off the advertised 10."
+      },
+      {
+        "name": "Michael Chen",
+        "date": "2026-06-02T18:05:00",
+        "rating": 2,
+        "text": "Sound cuts out randomly when connected to my phone. Returning it."
+      },
+      {
+        "name": "Farida Khan",
+        "date": "2026-06-25T09:40:00",
+        "rating": 3,
+        "text": "Looks nice but the bass is weak and it creaks when picked up."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "standard",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "e-602",
+    "cat": "electronics",
+    "agentra_category": "electronics",
+    "name": "AuraBeat Wireless Earbuds",
+    "price": 2499,
+    "bestseller": true,
+    "rating": 4.9,
+    "reviewCount": 512,
+    "good": false,
+    "authentic": false,
+    "desc": "Wireless earbuds with \"studio-grade\" sound and 5.0-star average rating.",
+    "reviews": [
+      {
+        "name": "Rahul_2024",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      },
+      {
+        "name": "ShopperPro99",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      },
+      {
+        "name": "verified_buyer22",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "e-603",
+    "cat": "electronics",
+    "agentra_category": "electronics",
+    "name": "VoltEdge Noise-Cancelling Headphones",
+    "price": 4299,
+    "bestseller": true,
+    "rating": 4.7,
+    "reviewCount": 1340,
+    "good": true,
+    "authentic": true,
+    "desc": "Over-ear ANC headphones, 30-hour battery, foldable design.",
+    "reviews": [
+      {
+        "name": "Devansh Rao",
+        "date": "2026-03-11T14:15:00",
+        "rating": 5,
+        "text": "ANC actually works on flights, cancels engine hum really well. Comfortable for long wear too."
+      },
+      {
+        "name": "Lucia Fernandez",
+        "date": "2026-04-29T20:30:00",
+        "rating": 4,
+        "text": "Great sound and battery life, wish the case was a bit smaller."
+      },
+      {
+        "name": "Tom Baker",
+        "date": "2026-06-08T11:00:00",
+        "rating": 5,
+        "text": "Used daily for commuting for 3 months now, still going strong."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "high",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "e-604",
+    "cat": "electronics",
+    "agentra_category": "electronics",
+    "name": "ZenPulse Smart Watch",
+    "price": 3199,
+    "bestseller": false,
+    "rating": 5.0,
+    "reviewCount": 118,
+    "good": false,
+    "authentic": false,
+    "desc": "Fitness smartwatch with heart-rate and SpO2 tracking, perfect 5.0 rating.",
+    "reviews": [
+      {
+        "name": "ShopperPro99",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      },
+      {
+        "name": "verified_buyer22",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      },
+      {
+        "name": "TopReviewerX",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Great quality for the price, love it!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "e-605",
+    "cat": "electronics",
+    "agentra_category": "electronics",
+    "name": "NovaCharge 20000mAh Power Bank",
+    "price": 1499,
+    "bestseller": false,
+    "rating": 3.6,
+    "reviewCount": 52,
+    "good": true,
+    "authentic": true,
+    "desc": "High-capacity power bank with dual USB-C fast charging.",
+    "reviews": [
+      {
+        "name": "Priya Menon",
+        "date": "2026-02-18T08:45:00",
+        "rating": 4,
+        "text": "Charges my phone fully twice, exactly as advertised. Solid build too."
+      },
+      {
+        "name": "Kwame Boateng",
+        "date": "2026-04-03T16:20:00",
+        "rating": 3,
+        "text": "Works well but a bit heavy to carry daily."
+      },
+      {
+        "name": "Elena Petrova",
+        "date": "2026-05-27T21:10:00",
+        "rating": 4,
+        "text": "Been reliable for 3 months of travel, fast charging is genuinely fast."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "high",
+    "brand_tier": "standard",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "c-601",
+    "cat": "clothing",
+    "agentra_category": "clothing",
+    "name": "UrbanFit Men's Jacket",
+    "price": 2199,
+    "bestseller": true,
+    "rating": 2.1,
+    "reviewCount": 301,
+    "good": false,
+    "authentic": true,
+    "desc": "Water-resistant everyday jacket with zip pockets.",
+    "reviews": [
+      {
+        "name": "Sam Osei",
+        "date": "2026-01-22T12:00:00",
+        "rating": 2,
+        "text": "Zipper broke within 2 weeks of light use."
+      },
+      {
+        "name": "Riya Kapoor",
+        "date": "2026-03-05T17:30:00",
+        "rating": 2,
+        "text": "Fabric is much thinner than it looks in photos, not warm at all."
+      },
+      {
+        "name": "Daniel Kim",
+        "date": "2026-04-19T09:15:00",
+        "rating": 3,
+        "text": "Fit is okay but stitching came loose on one sleeve already."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "standard",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "c-602",
+    "cat": "clothing",
+    "agentra_category": "clothing",
+    "name": "GlowWear Yoga Leggings",
+    "price": 1299,
+    "bestseller": true,
+    "rating": 4.9,
+    "reviewCount": 478,
+    "good": false,
+    "authentic": false,
+    "desc": "Squat-proof yoga leggings, customers say it's the best fit ever.",
+    "reviews": [
+      {
+        "name": "verified_buyer22",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      },
+      {
+        "name": "TopReviewerX",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Great quality for the price, love it!!!"
+      },
+      {
+        "name": "dealHunter7",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "c-603",
+    "cat": "clothing",
+    "agentra_category": "clothing",
+    "name": "ComfortKnit Cotton Hoodie",
+    "price": 1599,
+    "bestseller": true,
+    "rating": 4.6,
+    "reviewCount": 967,
+    "good": true,
+    "authentic": true,
+    "desc": "Heavyweight cotton hoodie, pre-shrunk, fleece-lined.",
+    "reviews": [
+      {
+        "name": "Grace Lin",
+        "date": "2026-02-09T13:40:00",
+        "rating": 5,
+        "text": "Washed it a dozen times, no shrinking or fading. Genuinely warm."
+      },
+      {
+        "name": "Omar Siddiqui",
+        "date": "2026-03-27T19:05:00",
+        "rating": 4,
+        "text": "Great everyday hoodie, sizing runs slightly large."
+      },
+      {
+        "name": "Hana Suzuki",
+        "date": "2026-05-15T10:50:00",
+        "rating": 5,
+        "text": "Bought a second one in another color, that good."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "high",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "c-604",
+    "cat": "clothing",
+    "agentra_category": "clothing",
+    "name": "StyleCraft Denim Jeans",
+    "price": 1899,
+    "bestseller": false,
+    "rating": 5.0,
+    "reviewCount": 94,
+    "good": false,
+    "authentic": false,
+    "desc": "Slim-fit denim jeans, perfect 5.0 rating across the board.",
+    "reviews": [
+      {
+        "name": "TopReviewerX",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Great quality for the price, love it!!!"
+      },
+      {
+        "name": "dealHunter7",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      },
+      {
+        "name": "Rahul_2024",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "c-605",
+    "cat": "clothing",
+    "agentra_category": "clothing",
+    "name": "EverSoft Wool Sweater",
+    "price": 2099,
+    "bestseller": false,
+    "rating": 3.5,
+    "reviewCount": 38,
+    "good": true,
+    "authentic": true,
+    "desc": "Merino wool blend sweater, machine washable.",
+    "reviews": [
+      {
+        "name": "Ines Moreau",
+        "date": "2026-01-30T15:25:00",
+        "rating": 4,
+        "text": "Softer than expected for the price, kept me warm all winter."
+      },
+      {
+        "name": "Victor Alves",
+        "date": "2026-03-14T08:10:00",
+        "rating": 3,
+        "text": "Good sweater but colour faded slightly after washing."
+      },
+      {
+        "name": "Aisha Bello",
+        "date": "2026-05-02T20:40:00",
+        "rating": 4,
+        "text": "Comfortable fit, would recommend sizing up slightly."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "high",
+    "brand_tier": "standard",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "j-601",
+    "cat": "jewelry",
+    "agentra_category": "jewellery",
+    "name": "Lumina Silver Pendant",
+    "price": 899,
+    "bestseller": true,
+    "rating": 2.3,
+    "reviewCount": 274,
+    "good": false,
+    "authentic": true,
+    "desc": "Sterling silver-plated pendant on an 18-inch chain.",
+    "reviews": [
+      {
+        "name": "Neha Joshi",
+        "date": "2026-02-11T11:15:00",
+        "rating": 2,
+        "text": "Turned green on my neck within a week, definitely not real silver."
+      },
+      {
+        "name": "Robert Wallace",
+        "date": "2026-03-30T14:50:00",
+        "rating": 2,
+        "text": "Chain snapped after light everyday wear."
+      },
+      {
+        "name": "Chidi Okafor",
+        "date": "2026-05-08T09:25:00",
+        "rating": 3,
+        "text": "Looks pretty out of the box but tarnishes fast."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "anniversary"
+    ],
+    "durability": "low",
+    "brand_tier": "standard",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "j-602",
+    "cat": "jewelry",
+    "agentra_category": "jewellery",
+    "name": "Eclat Gold-Plated Bracelet",
+    "price": 1299,
+    "bestseller": true,
+    "rating": 4.8,
+    "reviewCount": 455,
+    "good": false,
+    "authentic": false,
+    "desc": "Gold-plated bracelet, reviewers call it \"heirloom quality.\"",
+    "reviews": [
+      {
+        "name": "dealHunter7",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      },
+      {
+        "name": "Rahul_2024",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      },
+      {
+        "name": "ShopperPro99",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "anniversary"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "j-603",
+    "cat": "jewelry",
+    "agentra_category": "jewellery",
+    "name": "Serene Pearl Earrings",
+    "price": 1799,
+    "bestseller": true,
+    "rating": 4.8,
+    "reviewCount": 812,
+    "good": true,
+    "authentic": true,
+    "desc": "Freshwater pearl drop earrings with hypoallergenic posts.",
+    "reviews": [
+      {
+        "name": "Camille Dubois",
+        "date": "2026-02-24T16:35:00",
+        "rating": 5,
+        "text": "No irritation even with sensitive ears, and the pearls have a real sheen."
+      },
+      {
+        "name": "Anjali Nair",
+        "date": "2026-04-11T12:20:00",
+        "rating": 5,
+        "text": "Got so many compliments, worth every rupee."
+      },
+      {
+        "name": "Marcus Webb",
+        "date": "2026-06-01T18:55:00",
+        "rating": 4,
+        "text": "Bought as a gift, packaging was lovely and quality feels solid."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "anniversary"
+    ],
+    "durability": "high",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "j-604",
+    "cat": "jewelry",
+    "agentra_category": "jewellery",
+    "name": "Opulence Cubic Zirconia Ring",
+    "price": 1099,
+    "bestseller": false,
+    "rating": 5.0,
+    "reviewCount": 76,
+    "good": false,
+    "authentic": false,
+    "desc": "Cubic zirconia statement ring, flawless 5.0 rating.",
+    "reviews": [
+      {
+        "name": "Rahul_2024",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      },
+      {
+        "name": "ShopperPro99",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      },
+      {
+        "name": "verified_buyer22",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "anniversary"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "j-605",
+    "cat": "jewelry",
+    "agentra_category": "jewellery",
+    "name": "Heritage Beaded Anklet",
+    "price": 599,
+    "bestseller": false,
+    "rating": 3.7,
+    "reviewCount": 29,
+    "good": true,
+    "authentic": true,
+    "desc": "Handmade beaded anklet with an adjustable clasp.",
+    "reviews": [
+      {
+        "name": "Sofia Ramirez",
+        "date": "2026-03-02T10:05:00",
+        "rating": 4,
+        "text": "Beads are well-strung, hasn't broken after 2 months of daily wear."
+      },
+      {
+        "name": "Tariq Ahmed",
+        "date": "2026-04-20T17:45:00",
+        "rating": 3,
+        "text": "Cute design, clasp is a little fiddly to open."
+      },
+      {
+        "name": "Yuki Tanaka",
+        "date": "2026-06-09T13:15:00",
+        "rating": 4,
+        "text": "Better quality than I expected at this price."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "anniversary"
+    ],
+    "durability": "high",
+    "brand_tier": "standard",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "d-601",
+    "cat": "diy",
+    "agentra_category": "diy",
+    "name": "QuickFix Cordless Drill",
+    "price": 2599,
+    "bestseller": true,
+    "rating": 2.0,
+    "reviewCount": 412,
+    "good": false,
+    "authentic": true,
+    "desc": "Cordless drill/driver with two batteries and a carry case.",
+    "reviews": [
+      {
+        "name": "George Papadopoulos",
+        "date": "2026-01-17T09:30:00",
+        "rating": 2,
+        "text": "One battery stopped holding charge after 3 weeks."
+      },
+      {
+        "name": "Fatima Zahra",
+        "date": "2026-03-08T15:00:00",
+        "rating": 2,
+        "text": "Motor overheats on anything tougher than drywall."
+      },
+      {
+        "name": "Liam O'Connor",
+        "date": "2026-04-26T11:40:00",
+        "rating": 2,
+        "text": "Chuck slips constantly, had to return it."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "school project"
+    ],
+    "durability": "low",
+    "brand_tier": "standard",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "d-602",
+    "cat": "diy",
+    "agentra_category": "diy",
+    "name": "HomeGlow LED Strip Lights",
+    "price": 999,
+    "bestseller": true,
+    "rating": 4.9,
+    "reviewCount": 601,
+    "good": false,
+    "authentic": false,
+    "desc": "App-controlled LED strip lights, reviewers say it's \"life-changing.\"",
+    "reviews": [
+      {
+        "name": "ShopperPro99",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      },
+      {
+        "name": "verified_buyer22",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      },
+      {
+        "name": "TopReviewerX",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Great quality for the price, love it!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "school project"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "d-603",
+    "cat": "diy",
+    "agentra_category": "diy",
+    "name": "SturdyBuild Tool Storage Box",
+    "price": 1699,
+    "bestseller": true,
+    "rating": 4.6,
+    "reviewCount": 703,
+    "good": true,
+    "authentic": true,
+    "desc": "Heavy-duty stackable tool box with a removable tray.",
+    "reviews": [
+      {
+        "name": "Marta Kowalski",
+        "date": "2026-02-05T08:20:00",
+        "rating": 5,
+        "text": "Latches are solid, survived being dropped off my truck bed once."
+      },
+      {
+        "name": "Ben Thompson",
+        "date": "2026-04-02T14:10:00",
+        "rating": 4,
+        "text": "Good capacity, stacks cleanly with the smaller size too."
+      },
+      {
+        "name": "Ravi Chandran",
+        "date": "2026-05-21T19:30:00",
+        "rating": 5,
+        "text": "Using it in my garage for 4 months now, no cracks or warping."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "school project"
+    ],
+    "durability": "high",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "d-604",
+    "cat": "diy",
+    "agentra_category": "diy",
+    "name": "CraftPro Hot Glue Gun Kit",
+    "price": 449,
+    "bestseller": false,
+    "rating": 5.0,
+    "reviewCount": 61,
+    "good": false,
+    "authentic": false,
+    "desc": "Hot glue gun with 30 glue sticks, rated a perfect 5.0.",
+    "reviews": [
+      {
+        "name": "verified_buyer22",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      },
+      {
+        "name": "TopReviewerX",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Great quality for the price, love it!!!"
+      },
+      {
+        "name": "dealHunter7",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "school project"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "d-605",
+    "cat": "diy",
+    "agentra_category": "diy",
+    "name": "GreenThumb Garden Tool Set",
+    "price": 899,
+    "bestseller": false,
+    "rating": 3.6,
+    "reviewCount": 44,
+    "good": true,
+    "authentic": true,
+    "desc": "5-piece stainless steel garden tool set with a canvas pouch.",
+    "reviews": [
+      {
+        "name": "Helena Novak",
+        "date": "2026-02-27T10:50:00",
+        "rating": 4,
+        "text": "Stainless steel actually resists rust after a season outdoors."
+      },
+      {
+        "name": "Suresh Pillai",
+        "date": "2026-04-15T16:05:00",
+        "rating": 3,
+        "text": "Handles are a bit small for larger hands, otherwise solid."
+      },
+      {
+        "name": "Claire Bennett",
+        "date": "2026-06-03T09:45:00",
+        "rating": 4,
+        "text": "Good starter set, the trowel is my favorite piece."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "school project"
+    ],
+    "durability": "high",
+    "brand_tier": "standard",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "b-601",
+    "cat": "beauty",
+    "agentra_category": "beauty",
+    "name": "PureGlow Vitamin C Serum",
+    "price": 799,
+    "bestseller": true,
+    "rating": 2.4,
+    "reviewCount": 359,
+    "good": false,
+    "authentic": true,
+    "desc": "Brightening vitamin C serum for daily use.",
+    "reviews": [
+      {
+        "name": "Isabella Rossi",
+        "date": "2026-01-29T09:00:00",
+        "rating": 2,
+        "text": "Broke me out within days, had to stop using it."
+      },
+      {
+        "name": "Karan Malhotra",
+        "date": "2026-03-16T18:25:00",
+        "rating": 2,
+        "text": "Smells odd and separated after a month in the bottle."
+      },
+      {
+        "name": "Nadia Hassan",
+        "date": "2026-05-04T12:35:00",
+        "rating": 3,
+        "text": "No visible brightening effect after 6 weeks of use."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "standard",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "b-602",
+    "cat": "beauty",
+    "agentra_category": "beauty",
+    "name": "RadiantSkin Anti-Aging Cream",
+    "price": 1499,
+    "bestseller": true,
+    "rating": 4.9,
+    "reviewCount": 534,
+    "good": false,
+    "authentic": false,
+    "desc": "Anti-aging night cream, reviewers call it a \"miracle in a jar.\"",
+    "reviews": [
+      {
+        "name": "TopReviewerX",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Great quality for the price, love it!!!"
+      },
+      {
+        "name": "dealHunter7",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      },
+      {
+        "name": "Rahul_2024",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "b-603",
+    "cat": "beauty",
+    "agentra_category": "beauty",
+    "name": "SilkTouch Hydrating Face Mask",
+    "price": 649,
+    "bestseller": true,
+    "rating": 4.8,
+    "reviewCount": 889,
+    "good": true,
+    "authentic": true,
+    "desc": "Sheet mask set with hyaluronic acid, 10-pack.",
+    "reviews": [
+      {
+        "name": "Zara Ahmed",
+        "date": "2026-02-13T20:10:00",
+        "rating": 5,
+        "text": "Skin feels noticeably plumper the next morning, every time."
+      },
+      {
+        "name": "Thiago Silva",
+        "date": "2026-04-08T15:45:00",
+        "rating": 4,
+        "text": "No fragrance irritation, good for sensitive skin like mine."
+      },
+      {
+        "name": "Olga Ivanova",
+        "date": "2026-05-30T11:20:00",
+        "rating": 5,
+        "text": "Repurchased twice already, consistent results."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "high",
+    "brand_tier": "premium",
+    "is_new_merchant": false,
+    "merchant": "martverse-verified",
+    "delivery_days": 3
+  },
+  {
+    "id": "b-604",
+    "cat": "beauty",
+    "agentra_category": "beauty",
+    "name": "LuxeBrow Growth Serum",
+    "price": 999,
+    "bestseller": false,
+    "rating": 5.0,
+    "reviewCount": 83,
+    "good": false,
+    "authentic": false,
+    "desc": "Eyebrow growth serum, a flawless 5.0-star listing.",
+    "reviews": [
+      {
+        "name": "dealHunter7",
+        "date": "2026-08-11T23:47:00",
+        "rating": 5,
+        "text": "Amazing product, exceeded expectations!!!"
+      },
+      {
+        "name": "Rahul_2024",
+        "date": "2026-08-12T23:51:00",
+        "rating": 5,
+        "text": "Best purchase ever, highly recommend!!!"
+      },
+      {
+        "name": "ShopperPro99",
+        "date": "2026-08-13T23:44:00",
+        "rating": 5,
+        "text": "Five stars, will definitely buy again!!!"
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "low",
+    "brand_tier": "premium",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  },
+  {
+    "id": "b-605",
+    "cat": "beauty",
+    "agentra_category": "beauty",
+    "name": "NaturalCare Aloe Body Lotion",
+    "price": 449,
+    "bestseller": false,
+    "rating": 3.7,
+    "reviewCount": 61,
+    "good": true,
+    "authentic": true,
+    "desc": "Fragrance-free aloe vera body lotion for daily use.",
+    "reviews": [
+      {
+        "name": "Wanjiru Kamau",
+        "date": "2026-02-20T08:55:00",
+        "rating": 4,
+        "text": "Absorbs fast without feeling greasy, good for humid weather."
+      },
+      {
+        "name": "Pedro Alves",
+        "date": "2026-04-06T17:15:00",
+        "rating": 3,
+        "text": "Does the job, wish the pump dispensed a bit more per press."
+      },
+      {
+        "name": "Mei Lin",
+        "date": "2026-05-24T10:30:00",
+        "rating": 4,
+        "text": "Been using it for eczema-prone skin with no reactions."
+      }
+    ],
+    "occasion_tags": [
+      "gift",
+      "everyday"
+    ],
+    "durability": "high",
+    "brand_tier": "standard",
+    "is_new_merchant": true,
+    "merchant": "martverse-unverified-11",
+    "delivery_days": 3
+  }
+]
+</script>
+
+<script>
+/* The block above is MartVerse's own product+review feed -- the single
+   source of truth this page renders from AND the exact thing a Catalogue
+   Ingestion Layer would scrape (see app/storefront.py in the Agentra repo,
+   which parses this same JSON island rather than keeping a separate,
+   hand-maintained copy that could drift out of sync with what's on screen).
+
+   Fabricated listings (authentic: false) deliberately reuse the same five
+   reviewer handles and four templated phrases across unrelated products in
+   DIFFERENT categories, and cluster every review within the same 3-day,
+   same-time-of-night window -- the detectable tell app/review_authenticity.py
+   is built to catch. */
+const RAW_PRODUCTS = JSON.parse(document.getElementById("martverse-catalog-data").textContent);
+
+/* ---- Featured-sort formula, deliberately naive to review authenticity --- */
+function featuredScore(p) {
+  return (p.bestseller ? 500 : 0) + p.rating * 50 + p.reviewCount * 0.05;
+}
+RAW_PRODUCTS.forEach((p) => { p.score = featuredScore(p); });
+
+/* ---- State --------------------------------------------------------------*/
+let activeCategory = "all";
+let activeSort = "featured";
+let cart = {}; // id -> qty
+let devMode = false;
+
+/* ---- DOM refs ------------------------------------------------------------*/
+const categoryNav = document.getElementById("categoryNav");
+const categoryTitle = document.getElementById("categoryTitle");
+const productGrid = document.getElementById("productGrid");
+const sortSelect = document.getElementById("sortSelect");
+const cartCountEl = document.getElementById("cartCount");
+const cartToggle = document.getElementById("cartToggle");
+const drawerOverlay = document.getElementById("drawerOverlay");
+const cartDrawer = document.getElementById("cartDrawer");
+const drawerClose = document.getElementById("drawerClose");
+const drawerItems = document.getElementById("drawerItems");
+const subtotalEl = document.getElementById("subtotal");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const productOverlay = document.getElementById("productOverlay");
+const productModal = document.getElementById("productModal");
+const checkoutOverlay = document.getElementById("checkoutOverlay");
+const checkoutClose = document.getElementById("checkoutClose");
+const checkoutDone = document.getElementById("checkoutDone");
+const orderIdDisplay = document.getElementById("orderIdDisplay");
+const devToggle = document.getElementById("devToggle");
+
+/* ---- Helpers ------------------------------------------------------------*/
+function catInfo(key) { return CATEGORIES.find((c) => c.key === key); }
+function money(n) { return "₹" + n.toLocaleString("en-IN"); }
+function starString(rating) {
+  const full = Math.round(rating);
+  return "★".repeat(full) + "☆".repeat(5 - full);
+}
+function fmtDate(iso) {
+  return new Date(iso).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+function imageMarkup(p, sizeClass) {
+  if (PRODUCT_IMAGE_URL) {
+    return `<div class="${sizeClass}"><img src="${PRODUCT_IMAGE_URL}" alt="${p.name}" /></div>`;
+  }
+  const c = catInfo(p.cat);
+  return `<div class="${sizeClass}" style="background:${c.color}">${c.emoji}</div>`;
+}
+
+/* ---- Category nav ---------------------------------------------------------*/
+function renderCategoryNav() {
+  const all = [{ key: "all", label: "All" }, ...CATEGORIES];
+  categoryNav.innerHTML = all.map((c) =>
+    `<button data-cat="${c.key}" class="${c.key === activeCategory ? "active" : ""}">${c.label}</button>`
+  ).join("");
+  categoryNav.querySelectorAll("button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeCategory = btn.dataset.cat;
+      renderCategoryNav();
+      renderGrid();
+    });
+  });
+}
+
+/* ---- Product grid ---------------------------------------------------------*/
+function sortedProducts() {
+  let list = RAW_PRODUCTS.filter((p) => activeCategory === "all" || p.cat === activeCategory);
+  const sorters = {
+    featured: (a, b) => b.score - a.score,
+    rating: (a, b) => b.rating - a.rating,
+    reviews: (a, b) => b.reviewCount - a.reviewCount,
+    price: (a, b) => a.price - b.price,
+  };
+  return list.sort(sorters[activeSort]);
+}
+
+function renderGrid() {
+  categoryTitle.textContent = activeCategory === "all" ? "All products" : catInfo(activeCategory).label;
+  const list = sortedProducts();
+  productGrid.innerHTML = list.map((p) => `
+    <div class="card" data-id="${p.id}">
+      <div class="dev-badges">
+        <span class="dev-chip ${p.good ? "good" : "bad"}">${p.good ? "ACTUALLY GOOD" : "ACTUALLY BAD"}</span>
+        <span class="dev-chip ${p.authentic ? "authentic" : "fabricated"}">${p.authentic ? "AUTHENTIC" : "FABRICATED"}</span>
+      </div>
+      ${imageMarkup(p, "imgbox")}
+      <div class="badge-row">${p.bestseller ? '<span class="bestseller-badge">BESTSELLER</span>' : ""}</div>
+      <p class="name">${p.name}</p>
+      <div><span class="stars">${starString(p.rating)}</span> <span class="review-count">${p.reviewCount.toLocaleString("en-IN")}</span></div>
+      <div class="price">${money(p.price)}</div>
+      <button class="add-btn" data-add="${p.id}">Add to Cart</button>
+    </div>
+  `).join("");
+
+  productGrid.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      if (e.target.matches("[data-add]")) return;
+      openProduct(card.dataset.id);
+    });
+  });
+  productGrid.querySelectorAll("[data-add]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      addToCart(btn.dataset.add);
+    });
+  });
+}
+
+/* ---- Product detail modal --------------------------------------------------*/
+function openProduct(id) {
+  const p = RAW_PRODUCTS.find((x) => x.id === id);
+  productModal.innerHTML = `
+    <button class="close" id="modalClose">&times;</button>
+    <div class="modal-top">
+      ${imageMarkup(p, "modal-img")}
+      <div class="modal-info">
+        ${p.bestseller ? '<span class="bestseller-badge">BESTSELLER</span>' : ""}
+        <h2>${p.name}</h2>
+        <div><span class="stars">${starString(p.rating)}</span> <span class="review-count">${p.rating.toFixed(1)} &middot; ${p.reviewCount.toLocaleString("en-IN")} ratings</span></div>
+        <div class="price">${money(p.price)}</div>
+        <p class="modal-desc">${p.desc}</p>
+        <button class="modal-add" id="modalAdd">Add to Cart</button>
+      </div>
+    </div>
+    <div class="reviews-section">
+      <h3>Customer Reviews</h3>
+      ${p.reviews.map((r) => `
+        <div class="review">
+          <div class="rname">${r.name}</div>
+          <div class="rmeta">${starString(r.rating)} &middot; ${fmtDate(r.date)}</div>
+          <div class="rtext">${r.text}</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  productModal.querySelector("#modalClose").addEventListener("click", closeProduct);
+  productModal.querySelector("#modalAdd").addEventListener("click", () => addToCart(p.id));
+  productOverlay.classList.add("show");
+}
+function closeProduct() { productOverlay.classList.remove("show"); }
+productOverlay.addEventListener("click", (e) => { if (e.target === productOverlay) closeProduct(); });
+
+/* ---- Cart ------------------------------------------------------------------*/
+function addToCart(id) {
+  cart[id] = (cart[id] || 0) + 1;
+  renderCart();
+  openDrawer();
+}
+function changeQty(id, delta) {
+  cart[id] = (cart[id] || 0) + delta;
+  if (cart[id] <= 0) delete cart[id];
+  renderCart();
+}
+function removeFromCart(id) { delete cart[id]; renderCart(); }
+
+function cartTotalCount() { return Object.values(cart).reduce((a, b) => a + b, 0); }
+function cartSubtotal() {
+  return Object.entries(cart).reduce((sum, [id, qty]) => {
+    const p = RAW_PRODUCTS.find((x) => x.id === id);
+    return sum + p.price * qty;
+  }, 0);
+}
+
+function renderCart() {
+  cartCountEl.textContent = cartTotalCount();
+  const entries = Object.entries(cart);
+  if (entries.length === 0) {
+    drawerItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+  } else {
+    drawerItems.innerHTML = entries.map(([id, qty]) => {
+      const p = RAW_PRODUCTS.find((x) => x.id === id);
+      return `
+        <div class="cart-line">
+          ${imageMarkup(p, "imgbox")}
+          <div class="cl-info">
+            <div class="cl-name">${p.name}</div>
+            <div>${money(p.price)}</div>
+            <div class="cl-controls">
+              <button data-dec="${id}">-</button>
+              <span>${qty}</span>
+              <button data-inc="${id}">+</button>
+              <span class="remove" data-remove="${id}">Remove</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+    drawerItems.querySelectorAll("[data-inc]").forEach((b) => b.addEventListener("click", () => changeQty(b.dataset.inc, 1)));
+    drawerItems.querySelectorAll("[data-dec]").forEach((b) => b.addEventListener("click", () => changeQty(b.dataset.dec, -1)));
+    drawerItems.querySelectorAll("[data-remove]").forEach((b) => b.addEventListener("click", () => removeFromCart(b.dataset.remove)));
+  }
+  subtotalEl.textContent = money(cartSubtotal());
+}
+
+function openDrawer() { drawerOverlay.classList.add("show"); cartDrawer.classList.add("show"); }
+function closeDrawer() { drawerOverlay.classList.remove("show"); cartDrawer.classList.remove("show"); }
+cartToggle.addEventListener("click", openDrawer);
+drawerClose.addEventListener("click", closeDrawer);
+drawerOverlay.addEventListener("click", closeDrawer);
+
+/* ---- Checkout ----------------------------------------------------------------*/
+function randomOrderId() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let s = "";
+  for (let i = 0; i < 8; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return "ORD-" + s;
+}
+checkoutBtn.addEventListener("click", () => {
+  if (cartTotalCount() === 0) return;
+  orderIdDisplay.textContent = "Order #" + randomOrderId();
+  closeDrawer();
+  checkoutOverlay.classList.add("show");
+});
+function closeCheckout() { checkoutOverlay.classList.remove("show"); }
+checkoutClose.addEventListener("click", closeCheckout);
+checkoutDone.addEventListener("click", () => {
+  cart = {};
+  renderCart();
+  closeCheckout();
+});
+
+/* ---- Dev ground-truth toggle ---------------------------------------------------*/
+devToggle.addEventListener("click", () => {
+  devMode = !devMode;
+  document.body.classList.toggle("dev-mode", devMode);
+  devToggle.textContent = devMode ? "dev: ground truth ON" : "dev: ground truth off";
+  devToggle.classList.toggle("active", devMode);
+});
+
+/* ---- Sort ------------------------------------------------------------------*/
+sortSelect.addEventListener("change", () => { activeSort = sortSelect.value; renderGrid(); });
+
+/* ---- Init --------------------------------------------------------------------*/
+renderCategoryNav();
+renderGrid();
+renderCart();
+</script>
+</body>
+</html>

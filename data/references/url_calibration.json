@@ -1,0 +1,53 @@
+{
+ "n": 10000,
+ "phishing": 5000,
+ "legitimate": 5000,
+ "pdo": 20,
+ "factor": 28.85,
+ "signals": {
+  "Have_IP": {
+   "agentra_signal": "odd_url",
+   "in_phishing": 55,
+   "in_legit": 0,
+   "likelihood_ratio": 111.0,
+   "points": 136,
+   "points_95ci": [
+    56,
+    216
+   ]
+  },
+  "TinyURL": {
+   "agentra_signal": "shortener",
+   "in_phishing": 556,
+   "in_legit": 347,
+   "likelihood_ratio": 1.6,
+   "points": 14,
+   "points_95ci": [
+    10,
+    17
+   ]
+  },
+  "Have_At": {
+   "agentra_signal": "(not an Agentra signal yet)",
+   "in_phishing": 201,
+   "in_legit": 25,
+   "likelihood_ratio": 7.9,
+   "points": 60,
+   "points_95ci": [
+    48,
+    71
+   ]
+  },
+  "Prefix/Suffix": {
+   "agentra_signal": "(not used: hyphens are common in real shop names)",
+   "in_phishing": 906,
+   "in_legit": 26,
+   "likelihood_ratio": 34.21,
+   "points": 102,
+   "points_95ci": [
+    91,
+    113
+   ]
+  }
+ }
+}

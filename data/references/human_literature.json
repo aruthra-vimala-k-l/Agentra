@@ -1,0 +1,18 @@
+{
+  "_note": "VERIFIED 2026-10-15 against the paper text (arXiv 2509.25609, Table 2 and Figure 3 as read from the PDF). Average attribute sensitivity values for models are read from Figure 3 and are approximate (~). Replace the human values with OPeRA-derived ones via scripts/human_baseline_from_opera.py if you run it.",
+  "source": "Cherep, Ma, Xu, Shaked, Maes, Singh. A Framework for Studying AI Agent Behavior: Evidence from Consumer Choice Experiments. ICLR 2026. arXiv:2509.25609",
+  "metric": "absolute percentage-point change in probability of choosing a product in a binary forced-choice (2AFC) trial (linear probability model with trial fixed effects)",
+  "human": {
+    "avg_attribute_sensitivity_pp": 7.0,
+    "per_attribute_pp": {"viewed_first": 4.0, "higher_rated": 5.0, "cheaper": 9.4, "nudged": 9.9},
+    "sample": "30 Prolific participants x 50 decisions (1,500 trials); effects for position, rating and price were not significant individually; nudge effect p<.05 and largely driven by the Wirecutter nudge",
+    "caveat": "small sample, tested only in the Original condition"
+  },
+  "agents": {
+    "claude-3.5-haiku": {"avg_attribute_sensitivity_pp": 13.0, "per_attribute_pp": {"viewed_first": -35.4, "higher_rated": 7.8, "cheaper": 9.0, "nudged": 0.7}},
+    "claude-sonnet-4": {"avg_attribute_sensitivity_pp": 31.0, "per_attribute_pp": {"viewed_first": -9.2, "higher_rated": 46.7, "cheaper": 32.5, "nudged": 37.2}}
+  },
+  "amplification_range_vs_human": [3, 10],
+  "amplification_note": "The paper states agents often amplify human susceptibility 3-10+x in running text; it is not tabulated, and some of the larger ratios compare matched conditions with the human Original condition.",
+  "metric_difference": "The paper averages four attributes (position, rating, price, nudge). Agentra's experiment averages price and rating only and reports position separately, so the comparison is approximate."
+}

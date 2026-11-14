@@ -1,0 +1,27 @@
+
+# Local data and secrets
+data/audit/
+data/catalog/products.jsonl
+.env
+data/catalog/.cache/
+
+# Python / test caches
+__pycache__/
+*.pyc
+.pytest_cache/
+pytest-cache-files-*/
+
+# Run logs
+*.log
+
+# Older pre-Groq backup (superseded)
+_pre_groq_backup/
+
+# Large third-party URL lists (re-download; see data/eval/external/README_external_data.md)
+data/eval/external/benign_urls.txt
+data/eval/external/phishtank_verified_urls.txt
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

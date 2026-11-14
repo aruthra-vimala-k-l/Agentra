@@ -1,0 +1,137 @@
+[
+ {
+  "scenario": "a durable gold necklace for my mother's birthday under 3000",
+  "product": "Luv and Gratitude Gift for Mom, Sterling Silver Necklace for Mom, Mother's Day Gift, Birth",
+  "price": 2489.17,
+  "condition_A_text": "You said it should last, and this is solid material rated high-durability; fits your \u20b93,000 budget at \u20b92,489; tagged for gift.",
+  "condition_B_text": "Why this was chosen: durability match 37%; occasion match 25%; price fit 17%; brand preference 11%; review influence 10%",
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Which factor mattered MOST in choosing this product?",
+    "answer": "durability match"
+   },
+   {
+    "id": "q2",
+    "text": "Did the seller's promotion/sponsorship change the ranking? (yes/no)",
+    "answer": "no"
+   },
+   {
+    "id": "q3",
+    "text": "Was price a factor in the choice? (yes/no)",
+    "answer": "yes"
+   },
+   {
+    "id": "q4",
+    "text": "Name one factor that did NOT affect the choice.",
+    "answer": [
+     "new merchant caution",
+     "nudge exposure"
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "a sturdy drill set for home repairs under 4000",
+  "product": "Gingher 8\" Knife Edge Blunt Utility Shears",
+  "price": 2079.15,
+  "condition_A_text": "Fits your \u20b94,000 budget at \u20b92,079.",
+  "condition_B_text": "Why this was chosen: price fit 43%; brand preference 29%; review influence 28%",
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Which factor mattered MOST in choosing this product?",
+    "answer": "price fit"
+   },
+   {
+    "id": "q2",
+    "text": "Did the seller's promotion/sponsorship change the ranking? (yes/no)",
+    "answer": "no"
+   },
+   {
+    "id": "q3",
+    "text": "Was price a factor in the choice? (yes/no)",
+    "answer": "yes"
+   },
+   {
+    "id": "q4",
+    "text": "Name one factor that did NOT affect the choice.",
+    "answer": [
+     "durability match",
+     "new merchant caution",
+     "nudge exposure",
+     "occasion match"
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "skin care for dry skin under 1500",
+  "product": "SUNLAND Professional Tailor Scissors Heavy Duty Tailor Shears for Costume Designer Dressma",
+  "price": 1493.17,
+  "condition_A_text": "Fits your \u20b91,500 budget at \u20b91,493.",
+  "condition_B_text": "Why this was chosen: price fit 45%; brand preference 30%; review influence 25%",
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Which factor mattered MOST in choosing this product?",
+    "answer": "price fit"
+   },
+   {
+    "id": "q2",
+    "text": "Did the seller's promotion/sponsorship change the ranking? (yes/no)",
+    "answer": "no"
+   },
+   {
+    "id": "q3",
+    "text": "Was price a factor in the choice? (yes/no)",
+    "answer": "yes"
+   },
+   {
+    "id": "q4",
+    "text": "Name one factor that did NOT affect the choice.",
+    "answer": [
+     "durability match",
+     "new merchant caution",
+     "nudge exposure",
+     "occasion match"
+    ]
+   }
+  ]
+ },
+ {
+  "scenario": "wireless earbuds under 2500",
+  "product": "SUPERDANNY 9.8ft 15A Surge Protector Power Strip 14AWG Extension Cord with USB 6 Outlet Ch",
+  "price": 2157.17,
+  "condition_A_text": "Fits your \u20b92,500 budget at \u20b92,157.",
+  "condition_B_text": "Why this was chosen: price fit 62%; review influence 38%",
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Which factor mattered MOST in choosing this product?",
+    "answer": "price fit"
+   },
+   {
+    "id": "q2",
+    "text": "Did the seller's promotion/sponsorship change the ranking? (yes/no)",
+    "answer": "no"
+   },
+   {
+    "id": "q3",
+    "text": "Was price a factor in the choice? (yes/no)",
+    "answer": "yes"
+   },
+   {
+    "id": "q4",
+    "text": "Name one factor that did NOT affect the choice.",
+    "answer": [
+     "brand preference",
+     "durability match",
+     "new merchant caution",
+     "nudge exposure",
+     "occasion match"
+    ]
+   }
+  ]
+ }
+]

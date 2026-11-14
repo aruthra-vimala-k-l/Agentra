@@ -1,0 +1,42 @@
+{
+  "dataset": "Amazon Reviews 2023 (McAuley Lab) -- item metadata + reviews",
+  "built_at": "2026-10-15T02:35:48.566347+00:00",
+  "source_files": {
+    "Handmade_Products": "meta_Handmade_Products.jsonl.gz",
+    "Clothing_Shoes_and_Jewelry": "meta_Clothing_Shoes_and_Jewelry_sample.jsonl.gz",
+    "All_Beauty": "meta_All_Beauty.jsonl.gz",
+    "Grocery_and_Gourmet_Food": "meta_Grocery_and_Gourmet_Food.jsonl.gz",
+    "Electronics": "meta_Electronics_sample.jsonl.gz",
+    "Arts_Crafts_and_Sewing": "meta_Arts_Crafts_and_Sewing.jsonl.gz",
+    "Tools_and_Home_Improvement": "meta_Tools_and_Home_Improvement_sample.jsonl.gz"
+  },
+  "review_files": {
+    "Handmade_Products": "Handmade_Products.jsonl.gz",
+    "Clothing_Shoes_and_Jewelry": "Clothing_Shoes_and_Jewelry_sample.jsonl.gz",
+    "All_Beauty": "All_Beauty.jsonl.gz",
+    "Grocery_and_Gourmet_Food": "Grocery_and_Gourmet_Food_sample.jsonl.gz",
+    "Electronics": "Electronics_sample.jsonl.gz",
+    "Arts_Crafts_and_Sewing": "Arts_Crafts_and_Sewing_sample.jsonl.gz",
+    "Tools_and_Home_Improvement": "Tools_and_Home_Improvement_sample.jsonl.gz"
+  },
+  "usd_inr_assumed": 83.0,
+  "selection": "seeded random sample (seed=7); products with >= 10 reviews first",
+  "record_count": 1029,
+  "by_category": {
+    "jewellery": 300,
+    "care": 279,
+    "electronics": 150,
+    "diy": 300
+  },
+  "reviews_attached": 1029,
+  "derived_fields": {
+    "durability": "keyword rule over title/features/description; None when unknown",
+    "occasion_tags": "keyword rule (app.intent.OCCASION_KEYWORDS) over text",
+    "brand_tier": "premium = top price quartile within source file"
+  },
+  "not_available_in_source": [
+    "delivery_days",
+    "sponsored flag",
+    "seller age"
+  ]
+}

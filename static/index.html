@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agentra Shopping Agent</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Agentra — Shopping Agent (Option A)</h1>
+    <p>Intent capture → catalogue retrieval → ASIDE Pre-Transaction Gate, composed as one pipeline.</p>
+    <div id="aside-status" class="status">checking ASIDE connection…</div>
+    <nav class="top-nav">
+      <a href="/dashboard" target="_blank">Enterprise Dashboard →</a>
+      <a href="/widget-demo" target="_blank">Consumer Widget demo →</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <section class="panel">
+      <h2>Conversation</h2>
+      <div id="chat-log"></div>
+      <div class="chat-input">
+        <input id="chat-input" type="text" placeholder="e.g. Looking for electronics, budget ₹5000, something durable." />
+        <button id="send-btn">Send</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Shortlist &amp; security decision</h2>
+      <div id="products"><p class="empty-hint">Products will appear here once enough is known about your intent.</p></div>
+      <div id="gate"></div>
+      <details class="trajectory">
+        <summary>Decision trajectory (Canonical Decision Object)</summary>
+        <pre class="trajectory-json" id="trajectory-json">—</pre>
+      </details>
+    </section>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

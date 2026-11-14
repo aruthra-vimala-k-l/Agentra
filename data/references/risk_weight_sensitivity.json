@@ -1,0 +1,34 @@
+{
+ "threshold": 40,
+ "signals_that_alone_reach_high": [
+  "unverified_source",
+  "dead_link",
+  "review_flagged",
+  "no_rating_evidence",
+  "prompt_injection",
+  "lookalike_domain"
+ ],
+ "mid_signals": 10,
+ "mid_pairs_reaching_high": 35,
+ "sensitivity": {
+  "+/-10% every weight": {
+   "flip_rate": 0.0345,
+   "baseline_high_share": 0.464
+  },
+  "+/-20% every weight": {
+   "flip_rate": 0.0414,
+   "baseline_high_share": 0.465
+  },
+  "+/-30% every weight": {
+   "flip_rate": 0.057,
+   "baseline_high_share": 0.464
+  }
+ },
+ "high_share_by_threshold": {
+  "30": 0.569,
+  "35": 0.516,
+  "40": 0.465,
+  "45": 0.4,
+  "50": 0.337
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "sessions_used": 141,
+  "choices_used": 141,
+  "skipped": {
+    "no_asin": 27,
+    "price_unknown": 68,
+    "too_few_seen": 0
+  },
+  "page_meta_lists_used": {
+    "promotion_items": 63773,
+    "search_results": 65930,
+    "for_you": 365,
+    "deals": 47,
+    "active_items_closed": 282,
+    "active_items_opened_purchase": 4,
+    "buy_it_again": 214,
+    "active_items_opened_sns": 3
+  },
+  "cheaper_than_median_rate": 0.674,
+  "price_percentile_mean": 0.363,
+  "dataset": "NEU-HAI/OPeRA filtered_action (CC-BY-4.0)",
+  "metric_note": "Browsing-trace tilt, NOT the Cherep 2AFC pp metric. 0.5 = no price tilt.",
+  "choice_heuristic": "click whose semantic_id contains add_to_cart / buy_now / place_your_order; chosen ASIN from the page URL; products seen = priced lists in page_meta (not cart/saved items) before the click"
+}

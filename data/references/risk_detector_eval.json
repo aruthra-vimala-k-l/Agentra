@@ -1,0 +1,724 @@
+{
+ "injection": {
+  "detectors": {
+   "old_4_phrases": {
+    "dev_agentdojo_templates_x_goals": {
+     "k": 10,
+     "n": 30,
+     "rate": 0.3333,
+     "ci95": [
+      0.1923,
+      0.5122
+     ]
+    },
+    "heldout_injecagent_plain_instructions": {
+     "k": 0,
+     "n": 62,
+     "rate": 0.0,
+     "ci95": [
+      0,
+      0.0583
+     ]
+    },
+    "heldout_injecagent_with_override_wrapper": {
+     "k": 62,
+     "n": 62,
+     "rate": 1.0,
+     "ci95": [
+      0.9417,
+      1
+     ]
+    },
+    "agentdojo_per_template": {
+     "direct": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.1667,
+      "ci95": [
+       0.0301,
+       0.5635
+      ]
+     },
+     "ignore_previous": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.1667,
+      "ci95": [
+       0.0301,
+       0.5635
+      ]
+     },
+     "system_message": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.1667,
+      "ci95": [
+       0.0301,
+       0.5635
+      ]
+     },
+     "injecagent": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "important_instructions": {
+      "k": 1,
+      "n": 6,
+      "rate": 0.1667,
+      "ci95": [
+       0.0301,
+       0.5635
+      ]
+     }
+    },
+    "false_positives_on_real_text": {
+     "k": 1,
+     "n": 24035,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0002
+     ]
+    }
+   },
+   "v2_override_role_sequence_action": {
+    "dev_agentdojo_templates_x_goals": {
+     "k": 30,
+     "n": 30,
+     "rate": 1.0,
+     "ci95": [
+      0.8865,
+      1
+     ]
+    },
+    "heldout_injecagent_plain_instructions": {
+     "k": 0,
+     "n": 62,
+     "rate": 0.0,
+     "ci95": [
+      0,
+      0.0583
+     ]
+    },
+    "heldout_injecagent_with_override_wrapper": {
+     "k": 62,
+     "n": 62,
+     "rate": 1.0,
+     "ci95": [
+      0.9417,
+      1
+     ]
+    },
+    "agentdojo_per_template": {
+     "direct": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "ignore_previous": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "system_message": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "injecagent": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "important_instructions": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     }
+    },
+    "false_positives_on_real_text": {
+     "k": 1,
+     "n": 24035,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0002
+     ]
+    }
+   },
+   "v3_plus_exfil_rules": {
+    "dev_agentdojo_templates_x_goals": {
+     "k": 30,
+     "n": 30,
+     "rate": 1.0,
+     "ci95": [
+      0.8865,
+      1
+     ]
+    },
+    "heldout_injecagent_plain_instructions": {
+     "k": 34,
+     "n": 62,
+     "rate": 0.5484,
+     "ci95": [
+      0.4253,
+      0.6658
+     ]
+    },
+    "heldout_injecagent_with_override_wrapper": {
+     "k": 62,
+     "n": 62,
+     "rate": 1.0,
+     "ci95": [
+      0.9417,
+      1
+     ]
+    },
+    "agentdojo_per_template": {
+     "direct": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "ignore_previous": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "system_message": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "injecagent": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     },
+     "important_instructions": {
+      "k": 6,
+      "n": 6,
+      "rate": 1.0,
+      "ci95": [
+       0.6097,
+       1.0
+      ]
+     }
+    },
+    "false_positives_on_real_text": {
+     "k": 1,
+     "n": 24035,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0002
+     ]
+    }
+   }
+  },
+  "n_real_texts": 24035,
+  "limits": "AgentDojo templates were seen while designing v2 (a development set, optimistic). InjecAgent is independent for v2; the exfil family (v3) was written after seeing 2 of its rows, so v3's InjecAgent recall is optimistic. Plain instructions with no override wording read like ordinary requests; no regex separates them reliably."
+ },
+ "url": {
+  "n_each": 4000,
+  "threshold_points": 40,
+  "assumed_prevalence_for_precision": 0.01,
+  "variants": {
+   "all_url_signals": {
+    "flag_as_high_risk": {
+     "TPR": {
+      "k": 114,
+      "n": 4000,
+      "rate": 0.0285,
+      "ci95": [
+       0.0238,
+       0.0341
+      ]
+     },
+     "FPR": {
+      "k": 13,
+      "n": 4000,
+      "rate": 0.0032,
+      "ci95": [
+       0.0019,
+       0.0056
+      ]
+     },
+     "precision_at_1pct_prevalence": 0.0814
+    },
+    "any_signal_fires": {
+     "TPR": {
+      "k": 2321,
+      "n": 4000,
+      "rate": 0.5803,
+      "ci95": [
+       0.5649,
+       0.5955
+      ]
+     },
+     "FPR": {
+      "k": 3799,
+      "n": 4000,
+      "rate": 0.9497,
+      "ci95": [
+       0.9425,
+       0.9561
+      ]
+     }
+    },
+    "auc": 0.3165
+   },
+   "without_insecure_url": {
+    "flag_as_high_risk": {
+     "TPR": {
+      "k": 67,
+      "n": 4000,
+      "rate": 0.0168,
+      "ci95": [
+       0.0132,
+       0.0212
+      ]
+     },
+     "FPR": {
+      "k": 13,
+      "n": 4000,
+      "rate": 0.0032,
+      "ci95": [
+       0.0019,
+       0.0056
+      ]
+     },
+     "precision_at_1pct_prevalence": 0.0495
+    },
+    "any_signal_fires": {
+     "TPR": {
+      "k": 210,
+      "n": 4000,
+      "rate": 0.0525,
+      "ci95": [
+       0.046,
+       0.0599
+      ]
+     },
+     "FPR": {
+      "k": 13,
+      "n": 4000,
+      "rate": 0.0032,
+      "ci95": [
+       0.0019,
+       0.0056
+      ]
+     }
+    },
+    "auc": 0.5246
+   }
+  },
+  "per_signal": {
+   "insecure_url": {
+    "in_phishing": {
+     "k": 2215,
+     "n": 4000,
+     "rate": 0.5537,
+     "ci95": [
+      0.5383,
+      0.5691
+     ]
+    },
+    "in_benign": {
+     "k": 3799,
+     "n": 4000,
+     "rate": 0.9497,
+     "ci95": [
+      0.9425,
+      0.9561
+     ]
+    }
+   },
+   "odd_url": {
+    "in_phishing": {
+     "k": 64,
+     "n": 4000,
+     "rate": 0.016,
+     "ci95": [
+      0.0126,
+      0.0204
+     ]
+    },
+    "in_benign": {
+     "k": 0,
+     "n": 4000,
+     "rate": 0.0,
+     "ci95": [
+      0,
+      0.001
+     ]
+    }
+   },
+   "lookalike_domain": {
+    "in_phishing": {
+     "k": 3,
+     "n": 4000,
+     "rate": 0.0008,
+     "ci95": [
+      0.0003,
+      0.0022
+     ]
+    },
+    "in_benign": {
+     "k": 13,
+     "n": 4000,
+     "rate": 0.0032,
+     "ci95": [
+      0.0019,
+      0.0056
+     ]
+    }
+   },
+   "risky_tld": {
+    "in_phishing": {
+     "k": 96,
+     "n": 4000,
+     "rate": 0.024,
+     "ci95": [
+      0.0197,
+      0.0292
+     ]
+    },
+    "in_benign": {
+     "k": 0,
+     "n": 4000,
+     "rate": 0.0,
+     "ci95": [
+      0,
+      0.001
+     ]
+    }
+   },
+   "shortener": {
+    "in_phishing": {
+     "k": 47,
+     "n": 4000,
+     "rate": 0.0118,
+     "ci95": [
+      0.0088,
+      0.0156
+     ]
+    },
+    "in_benign": {
+     "k": 0,
+     "n": 4000,
+     "rate": 0.0,
+     "ci95": [
+      0,
+      0.001
+     ]
+    }
+   }
+  },
+  "limits": "Benign list is dated, not shopping URLs, and mostly http (about 5.5% https), so insecure_url looks useless on it. Only URL-structure signals are tested; page, seller, rating and price signals are not (no public labels)."
+ },
+ "reviews": {
+  "real_products": {
+   "n": 1029,
+   "flagged": {
+    "k": 27,
+    "n": 1029,
+    "rate": 0.0262,
+    "ci95": [
+     0.0181,
+     0.0379
+    ]
+   },
+   "by_rule": {
+    "burst": {
+     "k": 0,
+     "n": 1029,
+     "rate": 0.0,
+     "ci95": [
+      0,
+      0.0037
+     ]
+    },
+    "low_diversity": {
+     "k": 0,
+     "n": 1029,
+     "rate": 0.0,
+     "ci95": [
+      0,
+      0.0037
+     ]
+    },
+    "duplicate_text": {
+     "k": 27,
+     "n": 1029,
+     "rate": 0.0262,
+     "ci95": [
+      0.0181,
+      0.0379
+     ]
+    }
+   },
+   "note": "False-positive proxy: assumes real Amazon reviews are mostly organic; they are not hand-labelled."
+  },
+  "injected_attacks_synthetic": {
+   "burst|pure|k=5": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "burst|pure|k=10": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "burst|pure|k=20": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "burst|mixed_into_real_reviews|k=5": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   },
+   "burst|mixed_into_real_reviews|k=10": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   },
+   "burst|mixed_into_real_reviews|k=20": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   },
+   "sockpuppet|pure|k=5": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "sockpuppet|pure|k=10": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "sockpuppet|pure|k=20": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "sockpuppet|mixed_into_real_reviews|k=5": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   },
+   "sockpuppet|mixed_into_real_reviews|k=10": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   },
+   "sockpuppet|mixed_into_real_reviews|k=20": {
+    "k": 82,
+    "n": 200,
+    "rate": 0.41,
+    "ci95": [
+     0.3442,
+     0.4792
+    ]
+   },
+   "template|pure|k=5": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "template|pure|k=10": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "template|pure|k=20": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "template|mixed_into_real_reviews|k=5": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "template|mixed_into_real_reviews|k=10": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "template|mixed_into_real_reviews|k=20": {
+    "k": 200,
+    "n": 200,
+    "rate": 1.0,
+    "ci95": [
+     0.9812,
+     1
+    ]
+   },
+   "stealth|pure|k=5": {
+    "k": 0,
+    "n": 200,
+    "rate": 0.0,
+    "ci95": [
+     0,
+     0.0188
+    ]
+   },
+   "stealth|pure|k=10": {
+    "k": 0,
+    "n": 200,
+    "rate": 0.0,
+    "ci95": [
+     0,
+     0.0188
+    ]
+   },
+   "stealth|pure|k=20": {
+    "k": 0,
+    "n": 200,
+    "rate": 0.0,
+    "ci95": [
+     0,
+     0.0188
+    ]
+   },
+   "stealth|mixed_into_real_reviews|k=5": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   },
+   "stealth|mixed_into_real_reviews|k=10": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   },
+   "stealth|mixed_into_real_reviews|k=20": {
+    "k": 8,
+    "n": 200,
+    "rate": 0.04,
+    "ci95": [
+     0.0204,
+     0.0769
+    ]
+   }
+  },
+  "limits": "Attacks are synthetic by construction (their form is my choice). 'mixed' adds fakes to a real product's own reviews, the realistic case. duplicate_text only catches EXACT repeats. These rules look at structure, not language."
+ }
+}

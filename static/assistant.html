@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agentra Shopping Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --paper:#f3f5f0;--surface:#fff;--ink:#11201c;--mut:#5b6862;--line:#d9dfd6;--line2:#e8ece5;
+ --brand:#12332e;--brand-ink:#f3f5f0;--saffron:#e8a317;
+ --ok:#0d7a4e;--ok-bg:#e2f3e9;--warn:#8f5500;--warn-bg:#fff0d0;--bad:#b3281b;--bad-bg:#fde8e4;--soft:#eaeee7;
+ --h:'Bricolage Grotesque','Public Sans',system-ui,sans-serif;--b:'Public Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+ --shadow:0 1px 0 rgba(17,32,28,.04),0 10px 30px -12px rgba(17,32,28,.18)}
+@media(prefers-color-scheme:dark){:root{--paper:#0d1512;--surface:#15201c;--ink:#e9f0eb;--mut:#9db0a6;--line:#27372f;--line2:#1f2d27;
+ --brand:#e8a317;--brand-ink:#1a1405;--ok:#5fd49b;--ok-bg:#123325;--warn:#f0b955;--warn-bg:#3a2b0b;--bad:#ff8f85;--bad-bg:#40201d;--soft:#1b2823;--shadow:none}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--b);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+svg.i{width:1em;height:1em;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* header */
+header{position:sticky;top:0;z-index:6;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark{width:34px;height:34px;border-radius:9px;background:#12332e;color:var(--saffron);display:grid;place-items:center;font:800 19px/1 var(--h);flex:none}
+#wal,.nav a,.nav button.n{white-space:nowrap}
+@media(max-width:600px){.bar{padding:10px 14px;gap:8px 10px;flex-wrap:wrap}.nav{order:3;width:100%;margin-left:0;justify-content:space-between;border-top:1px solid var(--line2);padding-top:6px}.nav a,.nav button.n{padding:6px 4px;font-size:13px}#wal{margin-left:auto;padding:6px 10px;font-size:12.5px}.wrap{padding:14px 14px 150px}}
+.brand b{font:700 19px/1 var(--h);letter-spacing:-.01em}.brand small{display:block;font-size:12px;color:var(--mut);margin-top:3px}
+.nav{margin-left:auto;display:flex;gap:6px;align-items:center}
+.nav a,.nav button.n{color:var(--mut);font:500 14px var(--b);text-decoration:none;background:none;border:0;cursor:pointer;padding:8px 10px;border-radius:8px}
+.nav a:hover,.nav button.n:hover{background:var(--soft);color:var(--ink)}
+#wal{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:999px;font:600 13.5px var(--b);cursor:default}
+#wal::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--saffron);box-shadow:0 0 0 3px color-mix(in srgb,var(--saffron) 25%,transparent)}
+
+/* layout */
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 160px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}.rail{display:none}}
+main{min-width:0}
+
+/* hero */
+.hero{padding:22px 0 8px}
+.hero h1{font:800 clamp(30px,5vw,46px)/1.04 var(--h);letter-spacing:-.025em;margin:0 0 12px;max-width:15em;text-wrap:balance}
+.hero p.lead{color:var(--mut);margin:0 0 26px;max-width:34em;font-size:17px}
+.starts{display:grid;gap:8px}
+.start{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 16px;font:500 15px var(--b);color:var(--ink);cursor:pointer;transition:border-color .15s,transform .15s}
+.start:hover{border-color:var(--brand);transform:translateX(3px)}
+.start .tag{flex:none;min-width:84px;font:600 12.5px var(--b);color:var(--mut)}
+.start .go{margin-left:auto;color:var(--mut)}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:560px){.tools{grid-template-columns:1fr}}
+.tool{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1px dashed var(--line);background:transparent;border-radius:12px;padding:13px 15px;cursor:pointer;color:var(--ink);font:500 14.5px/1.35 var(--b)}
+.tool:hover{border-color:var(--brand);background:var(--surface)}.tool .i{font-size:20px;color:var(--brand);margin-top:1px}.tool small{display:block;color:var(--mut);font-weight:400;margin-top:2px}
+@media(prefers-color-scheme:dark){.tool .i{color:var(--saffron)}}
+
+/* thread */
+.msg{display:flex;margin:16px 0;animation:in .2s ease}.msg .b{padding:12px 16px;border-radius:16px;max-width:88%;white-space:pre-wrap}
+.msg.user{justify-content:flex-end}.user .b{background:var(--brand);color:var(--brand-ink);border-bottom-right-radius:5px}
+.bot .b{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.dots span{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--mut);animation:b 1s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{transform:none;opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+.sum{margin:14px 0 4px;color:var(--mut);font-size:14px}.sum b{color:var(--ink)}
+
+/* product card */
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:12px 0;box-shadow:var(--shadow);overflow:hidden;animation:in .25s ease}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--ok)}
+.card.v-hi::before{background:var(--bad)}
+.card.v-hi{border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+.cin{padding:18px 20px 16px 24px}
+.top{display:flex;gap:12px;align-items:flex-start}
+.fav{flex:none;width:38px;height:38px;border-radius:10px;background:var(--soft);display:grid;place-items:center;font:700 16px var(--h);color:var(--brand)}
+@media(prefers-color-scheme:dark){.fav{color:var(--saffron)}}
+.card h3{margin:0;font:700 17px/1.3 var(--h);letter-spacing:-.005em}.host{color:var(--mut);font-size:13px}
+.pill{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:8px;font:700 13px var(--b);white-space:nowrap;border:1px solid transparent}
+.pill.lo{background:var(--ok-bg);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 25%,transparent)}
+.pill.hi{background:var(--bad-bg);color:var(--bad);border-color:color-mix(in srgb,var(--bad) 25%,transparent)}
+.pill.mid{background:var(--warn-bg);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 25%,transparent)}
+.syn{display:inline-block;margin-top:6px;font:600 12px var(--b);color:var(--warn);background:var(--warn-bg);border-radius:6px;padding:2px 8px}
+.facts{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin:14px 0 4px}
+.price{font:800 28px/1 var(--h);letter-spacing:-.02em}.rate{font-size:14px}.rate .star{color:var(--saffron)}
+.tagq{font-size:12.5px;color:var(--mut);background:var(--soft);padding:2px 9px;border-radius:999px}
+.meter{display:flex;align-items:center;gap:10px;margin:14px 0 6px;font-size:13px;color:var(--mut)}
+.mtr{position:relative;flex:1;max-width:260px;height:8px;border-radius:99px;background:var(--soft);overflow:visible}
+.mtr i{display:block;height:100%;border-radius:99px;background:var(--ok)}.mtr.hi i{background:var(--bad)}
+.mtr b{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.55;left:40%}
+.meter span{white-space:nowrap}
+.why{font-size:14.5px;margin:8px 0 0}
+.note{font-size:12.5px;color:var(--mut);margin-top:6px}
+.hi-box{background:var(--bad-bg);border-radius:10px;padding:10px 12px;margin-top:12px;color:var(--bad);font-size:14px}
+details{margin-top:12px;font-size:14px;border-top:1px solid var(--line2);padding-top:10px}summary{cursor:pointer;font-weight:600;color:var(--brand)}
+@media(prefers-color-scheme:dark){summary{color:var(--saffron)}}
+details ul{margin:8px 0 0;padding-left:20px}details li{margin:3px 0}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:11px 18px;font:700 14.5px var(--b);cursor:pointer;background:var(--brand);color:var(--brand-ink);text-decoration:none}
+.btn:hover{filter:brightness(1.12)}.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn.ghost:hover{border-color:var(--ink);filter:none}
+
+/* order flow */
+.ordbox{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:14px 16px;font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stp{border-top:3px solid var(--line);padding-top:8px;font-size:12.5px;color:var(--mut)}
+.stp b{display:block;font:700 13.5px var(--b);color:var(--ink)}
+.stp.done{border-color:var(--ok)}.stp.cur{border-color:var(--saffron)}.stp.stop{border-color:var(--bad)}.stp.skip{opacity:.55}
+.ordbox ul{margin:8px 0;padding-left:20px}
+.ticket{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;position:relative;font-size:13.5px}
+.ticket::after{content:"DEMO";position:absolute;right:12px;top:10px;font:800 11px var(--h);letter-spacing:.14em;color:var(--warn);border:1.5px solid var(--warn);border-radius:5px;padding:1px 6px;transform:rotate(4deg)}
+.ticket .rc{font:700 15px var(--h);letter-spacing:.04em}
+.legend{font-size:12.5px;color:var(--mut);border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:16px 0}
+
+/* rail */
+.rail{position:sticky;top:78px;display:grid;gap:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.panel h2{margin:0 0 10px;font:700 14px var(--h);color:var(--mut)}
+.bal{font:800 32px/1 var(--h);letter-spacing:-.02em}.bal small{display:block;font:500 12.5px var(--b);color:var(--mut);margin-top:6px;letter-spacing:0}
+.lim{display:grid;gap:7px;margin-top:14px;font-size:13px}.lim div{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line2);padding-top:7px}.lim span{color:var(--mut)}
+.seq{margin:0;padding:0;list-style:none;display:grid;gap:12px;counter-reset:s}
+.seq li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:13.5px;color:var(--mut)}
+.seq li::before{content:counter(s);width:24px;height:24px;border-radius:50%;background:var(--soft);color:var(--ink);display:grid;place-items:center;font:700 12px var(--h)}
+.seq b{color:var(--ink);display:block;font-size:14px}
+
+/* composer */
+form{position:fixed;left:0;right:0;bottom:0;padding:14px 20px 18px;background:linear-gradient(transparent,var(--paper) 40%);z-index:4}
+.comp{max-width:1080px;margin:0 auto;padding-right:332px}
+@media(max-width:900px){.comp{padding-right:0}}
+.cbox{display:flex;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:7px;box-shadow:var(--shadow)}
+.cbox:focus-within{border-color:var(--brand)}
+input[type=text]{flex:1;border:0;outline:0;background:transparent;color:var(--ink);font:16px var(--b);padding:9px 12px;min-width:0}
+.send{border:0;border-radius:10px;padding:0 20px;background:var(--brand);color:var(--brand-ink);font:700 14.5px var(--b);cursor:pointer}.send:disabled{opacity:.5}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(8,14,12,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+.ov.on{display:flex}.dlg{background:var(--surface);border-radius:16px;max-width:620px;width:100%;max-height:88vh;overflow:auto;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.4)}
+.dlg h2,.dlg h3{margin:0 0 8px;font:700 20px var(--h)}.dlg label{display:flex;gap:10px;align-items:flex-start;margin:12px 0;font-size:14px}
+.row{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+.lg{margin-top:10px}.lg .ev{border-top:1px solid var(--line2);padding:10px 0;font-size:13.5px}.lg .ev:first-child{border-top:0}
+.lg .t{color:var(--mut);font-size:12px}.lg .k{display:inline-block;background:var(--soft);border-radius:6px;padding:1px 8px;font-size:12px;font-weight:700;margin-right:6px}
+.lg .k.err{background:var(--bad-bg);color:var(--bad)}.lg .k.ok{background:var(--ok-bg);color:var(--ok)}.lg .it{color:var(--mut);margin:2px 0 0 12px}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><div class="bar">
+ <a class="brand" href="/assistant" aria-label="Agentra home"><div class="mark">A</div><div><b>Agentra</b><small>Shopping assistant</small></div></a>
+ <div class="nav"><a href="/dashboard">Dashboard</a><button id="logbtn" type="button" class="n">Activity log</button><span id="wal" title="Simulated wallet: no real money">Demo wallet</span></div>
+</div></header>
+
+<div class="wrap">
+<main>
+ <section class="hero" id="hero">
+  <h1>Check the seller before you pay.</h1>
+  <p class="lead">Ask for a product or paste a link. Agentra reads the page, checks the seller and the reviews, and rates the risk before any money moves.</p>
+  <div class="starts" id="chips">
+   <button class="start chip"><span class="tag">Gift</span>Birthday gift for a 12-year-old girl, under ₹1000<span class="go" aria-hidden="true">›</span></button>
+   <button class="start chip"><span class="tag">Electronics</span>Wireless earbuds under ₹2000<span class="go" aria-hidden="true">›</span></button>
+   <button class="start chip"><span class="tag">Home</span>Cordless drill for home use, ₹3000 budget<span class="go" aria-hidden="true">›</span></button>
+   <button class="start chip"><span class="tag">Skin care</span>Gentle face wash for dry skin<span class="go" aria-hidden="true">›</span></button>
+  </div>
+  <div class="tools">
+   <button class="tool chip" id="linkchip"><svg class="i" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span>Check a product link<small>Paste any Amazon, Flipkart or seller link</small></span></button>
+   <button class="tool chip" id="demochip" title="Synthetic test listings that show every risk outcome"><svg class="i" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9V3"/><path d="M7 15h10"/></svg><span>Run the risk demo<small>Nine invented listings that show every outcome</small></span></button>
+  </div>
+ </section>
+ <div id="log" aria-live="polite"></div>
+</main>
+<aside class="rail" aria-label="Safety desk">
+ <section class="panel"><h2>Demo wallet</h2><div class="bal" id="rbal">—<small>Simulated money. Products and prices are real.</small></div>
+  <div class="lim" id="rlim"></div></section>
+ <section class="panel"><h2>Before money moves</h2>
+  <ol class="seq"><li><span><b>Page check</b>The link must open and match the search.</span></li><li><span><b>Seller and review check</b>Marketplace names and badges earn no trust.</span></li><li><span><b>Gate</b>Allow, ask you to approve, or block.</span></li></ol></section>
+</aside>
+</div>
+
+<form id="f"><div class="comp"><div class="cbox"><input type="text" id="m" placeholder="Describe what you need, or paste a product link" autocomplete="off" aria-label="Message"><button class="send" id="b">Send</button></div></div></form>
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ot"><div class="dlg" id="dlg"></div></div>
+<script>
+let sid=null,data=[];const log=document.getElementById('log'),hero=document.getElementById('hero');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function safeUrl(u){try{const x=new URL(u);return(x.protocol==='https:'||x.protocol==='http:')?x.href:'#'}catch(e){return'#'}}
+const IC={ok:'<svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg>',
+ bad:'<svg class="i" viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17.5v.01"/></svg>',
+ coin:'<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9.5h5a1.5 1.5 0 0 1 0 3H9.5M9 15.5h5"/></svg>'};
+function msg(role,html,raw){const d=document.createElement('div');d.className='msg '+role;d.innerHTML='<div class="b">'+(raw?html:esc(html))+'</div>';log.appendChild(d);d.scrollIntoView({block:'end',behavior:'smooth'});return d}
+function pill(r){const hi=r.risk_level==='High risk',un=r.risk_level==='Unverified';
+ return '<span class="pill '+(hi?'hi':un?'mid':'lo')+'" title="Pre-payment risk">'+(hi?IC.bad:un?IC.bad:IC.ok)+' '+esc(un?'Could not verify':r.risk_level)+'</span>'}
+let single=false,ordN=0;
+function meter(r){const s=Math.max(0,Math.min(100,Number(r.risk_score)||0)),hi=r.risk_level==='High risk';
+ return '<div class="meter"><div class="mtr'+(hi?' hi':'')+'" role="img" aria-label="Risk score '+s+' out of 100. High risk starts at 40."><i style="width:'+Math.max(s,3)+'%"></i><b></b></div><span>Risk '+s+' / 100</span></div>'}
+function card(r,i){
+ const hi=r.risk_level==='High risk',syn=/^\[SYNTHETIC\]/i.test(r.name||''),nm=(r.name||'').replace(/^\[SYNTHETIC\]\s*/i,'');
+ return '<article class="card '+(hi?'v-hi':'v-lo')+'"><div class="cin"><div class="top"><div class="fav" aria-hidden="true">'+esc((r.host||'?').replace(/^www\./,'').charAt(0).toUpperCase())+'</div><div><h3>'+esc(nm)+'</h3><div class="host">'+esc((r.host||'unknown site').replace(/^www\./,''))+' · ranked #'+r.evaluated_rank+'</div>'+(syn?'<span class="syn">Synthetic test listing</span>':'')+'</div>'+pill(r)+'</div>'+
+ '<div class="facts"><span class="price">'+(r.price_inr!=null?'₹'+Number(r.price_inr).toLocaleString('en-IN'):'No price')+'</span>'+
+ '<span class="rate">'+(r.rating!=null?'<span class="star">★</span> <b>'+esc(r.rating)+'</b> <span class="host">('+esc(r.rating_count??'?')+' ratings)</span>':'<span class="host">No rating shown</span>')+'</span>'+
+ (r.brand?'<span class="tagq">'+esc(r.brand)+(r.brand_origin?' · '+esc(r.brand_origin):'')+'</span>':'')+'</div>'+
+ meter(r)+(r.brand_note?'<div class="note">'+esc(r.brand_note)+'</div>':'')+(r.why?'<div class="why">'+esc(r.why)+'</div>':'')+
+ (hi?'<div class="hi-box"><b>Be careful.</b> '+esc((r.risk_reasons||[])[0])+'</div>':'')+
+ '<details><summary>Why '+(hi?'high':'low')+' risk?</summary><ul>'+(r.risk_reasons||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+((r.bias_notes||[]).length?'<div class="note"><b>Bias controls</b><ul>'+r.bias_notes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':'')+'<div class="note">'+esc(r.risk_note)+'</div>'+
+ (single?'':'<div class="note">The assistant had it #'+r.model_rank+'. After Agentra\'s checks it is #'+r.evaluated_rank+'.</div>')+'</details>'+
+ ((r.link_state==='dead'||r.link_state==='unreachable')?'<div class="acts"><a class="btn ghost" target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q='+encodeURIComponent(nm+' '+(r.host||''))+'">Search for this product instead</a></div>':'<div class="acts"><button class="btn buy" data-i="'+i+'">'+IC.coin+' Buy with demo wallet</button><button class="btn ghost view" data-i="'+i+'">View seller page</button></div>')+'<div class="ord" id="ord'+r._oid+'"></div></div></article>'}
+function show(ev){
+ data=ev.results;data.forEach(r=>r._oid=++ordN);single=ev.results.length===1;const hi=ev.high_risk_count;
+ let h=(single?'':'<div class="sum"><b>'+ev.results.length+' options</b> · '+(hi?hi+' flagged high risk':'none flagged high risk')+'</div>')+
+  ev.results.map(card).join('')+
+  '<div class="legend"><b>How to read the tag.</b> “Low risk” means the page was confirmed, the ratings and seller check out, and nothing unusual was found. A trusted marketplace (Amazon, Flipkart, Meesho, Myntra…) does not count in a product\'s favour: the seller and the product must earn trust on their own evidence, and badges like Bestseller are ignored. “High risk” means one or more warning signs (unconfirmed page, odd reviews, thin ratings). The mark on the bar is where high risk starts. '+esc(ev.limits)+'</div>';
+ const d=document.createElement('div');d.innerHTML=h;log.appendChild(d);
+ const rows=ev.results;d.querySelectorAll('.view').forEach(b=>b.onclick=()=>pay(rows[+b.dataset.i]));d.querySelectorAll('.buy').forEach(b=>b.onclick=()=>buy(rows[+b.dataset.i],b));d.scrollIntoView({block:'end',behavior:'smooth'})}
+const VERD={ALLOW:['Allowed','lo'],REQUIRE_HUMAN_APPROVAL:['Needs your approval','mid'],DENY:['Blocked','hi']};
+function money(n){return '₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2})}
+function ordHtml(o){
+ const v=VERD[o.gate.verdict]||[o.gate.verdict,''],S=o.status,vd=o.gate.verdict;
+ const st={paid_demo:'Paid from the demo wallet (simulated)',pending_approval:'Waiting for your decision',rejected:'You rejected this. Nothing was charged.',blocked:'Blocked. Nothing was charged.',refunded_demo:'Refunded to the demo wallet',approved:'Approved'}[S]||S;
+ const s1='done',s2=vd==='ALLOW'?'skip':vd==='DENY'?'skip':(S==='pending_approval'?'cur':S==='rejected'?'stop':'done'),
+  s3=(S==='paid_demo'||S==='refunded_demo')?'done':(S==='blocked'||S==='rejected')?'stop':'';
+ return '<div class="ordbox"><div class="steps">'+
+  '<div class="stp '+s1+'"><b>Gate check</b><span class="pill '+v[1]+'" style="margin:4px 0 0">'+esc(v[0])+'</span></div>'+
+  '<div class="stp '+s2+'"><b>Your approval</b>'+(vd==='ALLOW'?'Not needed':vd==='DENY'?'Not offered':S==='pending_approval'?'Waiting':S==='rejected'?'Rejected':'Approved')+'</div>'+
+  '<div class="stp '+s3+'"><b>Payment</b>'+((S==='paid_demo')?'Settled (demo)':S==='refunded_demo'?'Refunded':(S==='blocked'||S==='rejected')?'Not made':'Pending')+'</div></div>'+
+  '<div><b>'+esc(st)+'</b></div><ul>'+o.gate.reasons.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
+  (S==='pending_approval'?'<div class="acts"><button class="btn" data-ap="1">Approve '+money(o.amount_inr)+'</button><button class="btn ghost" data-ap="0">Reject</button></div>':'')+
+  (S==='paid_demo'?'<div class="ticket"><div class="rc">'+esc(o.receipt)+'</div>'+money(o.amount_inr)+' debited · balance '+money(o.wallet.balance_inr)+'<div class="note"><b>Demo wallet: no real money moved.</b> To really buy, <a target="_blank" rel="noopener noreferrer" href="'+esc(safeUrl(o.url))+'">open the seller page</a>.</div></div>':'')+'</div>'}
+function showOrd(oid,o){const el=document.getElementById('ord'+oid);if(!el)return;el.innerHTML=ordHtml(o);
+ el.querySelectorAll('[data-ap]').forEach(b=>b.onclick=async()=>{el.querySelectorAll('button').forEach(x=>x.disabled=true);
+  try{const r=await fetch('/assistant/approve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_id:o.order_id,approve:b.dataset.ap==='1'})});showOrd(oid,await r.json());walletChip()}catch(e){el.innerHTML='<div class="note">Could not reach the server.</div>'}})}
+async function buy(row,btn){btn.disabled=true;const oid=row._oid;
+ try{const r=await fetch('/assistant/buy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sid,rank:row.evaluated_rank,url:row.url})}),j=await r.json();
+  if(!r.ok){document.getElementById('ord'+oid).innerHTML='<div class="note">'+esc(j.detail||'Could not start the purchase.')+'</div>';btn.disabled=false;return}
+  showOrd(oid,j);walletChip()}catch(e){btn.disabled=false;document.getElementById('ord'+oid).innerHTML='<div class="note">Could not reach the server.</div>'}}
+async function walletChip(){try{const j=await (await fetch('/assistant/wallet')).json();
+ document.getElementById('wal').textContent='Demo wallet '+money(j.balance_inr);
+ document.getElementById('rbal').innerHTML=money(j.balance_inr)+'<small>Simulated money. Products and prices are real.</small>';
+ const L=j.limits||{};document.getElementById('rlim').innerHTML=[['Spent today',money(j.spent_today_inr||0)],['Daily limit',money(L.daily_cap||0)],['Per purchase',money(L.per_purchase_cap||0)],['You approve above',money(L.approval_above||0)]].map(x=>'<div><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')}catch(e){}}
+function pay(r){
+ const hi=r.risk_level==='High risk',dlg=document.getElementById('dlg'),ov=document.getElementById('ov');
+ dlg.innerHTML='<h2 id="ot">Before you pay</h2><p style="margin:0 0 10px">'+esc(r.name)+' on <b>'+esc(r.host||'this site')+'</b></p>'+pill(r)+
+  '<ul style="padding-left:20px">'+(r.risk_reasons||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
+  (hi?'<label><input type="checkbox" id="ack"> I understand the risk and want to continue anyway.</label>':'')+
+  '<div class="note">Agentra does not take payment. You will pay on the seller\'s own site.</div>'+
+  '<div class="row"><button class="btn ghost" id="cx">Go back</button><a class="btn" id="go" target="_blank" rel="noopener noreferrer" href="'+esc(safeUrl(r.url))+'" style="'+(hi?'opacity:.5;pointer-events:none':'')+'">Open seller page</a></div>';
+ ov.classList.add('on');document.getElementById('cx').onclick=()=>ov.classList.remove('on');
+ const a=document.getElementById('ack');if(a)a.onchange=()=>{const g=document.getElementById('go');g.style.opacity=a.checked?1:.5;g.style.pointerEvents=a.checked?'auto':'none'};
+ document.getElementById('cx').focus()}
+document.getElementById('ov').onclick=e=>{if(e.target.id==='ov')e.target.classList.remove('on')};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('ov').classList.remove('on')});
+async function runDemo(){hero.style.display='none';msg('user','Show me the risk demo (synthetic listings)');
+ try{const r=await fetch('/assistant/demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sid})}),j=await r.json();
+  sid=j.session_id;msg('bot',j.reply);show(j.results)}catch(e){msg('bot','I could not reach the server. Is it running?')}}
+async function send(t){
+ t=t.trim();if(!t)return;hero.style.display='none';msg('user',t);
+ const b=document.getElementById('b');b.disabled=true;const w=msg('bot','<span class="dots"><span></span><span></span><span></span></span>',true);
+ try{const r=await fetch('/assistant/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:t,session_id:sid})});
+  const j=await r.json();w.remove();
+  if(r.status===429){msg('bot','Groq says the free rate limit is used up for now. Wait about a minute and try again. If it keeps happening, the daily free limit is spent: try again later, use a different API key, or upgrade the plan in the Groq console.')}
+  else if(!r.ok){msg('bot',r.status===400&&/not set/.test(j.detail||'')?'The assistant is not set up yet: add GROQ_API_KEY to the .env file and restart the server.':'Sorry, something went wrong ('+(j.detail||r.status)+'). Please try again.')}
+  else{sid=j.session_id;msg('bot',j.reply);if(j.results)show(j.results)}
+ }catch(e){w.remove();msg('bot','I could not reach the server. Is it running?')}
+ b.disabled=false;document.getElementById('m').focus()}
+document.getElementById('f').onsubmit=e=>{e.preventDefault();const i=document.getElementById('m'),t=i.value;i.value='';send(t)};
+document.querySelectorAll('#hero .chip').forEach(c=>c.onclick=()=>{if(c.id==='demochip'){runDemo();return}if(c.id==='linkchip'){document.getElementById('m').focus();document.getElementById('m').placeholder='Paste the product link here';return}send(c.textContent.replace(/^(Gift|Electronics|Home|Skin care)/,'').replace(/›$/,'').trim())});
+
+const KIND={assistant_demo_scenarios:'Risk demo',assistant_gate_decision:'Gate',assistant_human_decision:'Your decision',assistant_order_blocked:'Blocked',wallet_debit:'Wallet debit',wallet_refund:'Wallet refund',assistant_user_message:'You',assistant_shortlist:'Shortlist',assistant_url_check:'Link check',assistant_reply:'Reply',assistant_error:'Error'};
+function evHtml(e){const p=e.payload||{},k=KIND[e.event]||e.event,cls=e.event==='assistant_error'?'err':(e.event==='assistant_shortlist'||e.event==='assistant_url_check'?'ok':'');
+ let body='';
+ if(e.event==='assistant_user_message')body=esc(p.text)+(p.has_link?' <span class="t">(contains a link)</span>':'');
+ else if(e.event==='assistant_shortlist')body=esc(p.count)+' results, '+esc(p.high_risk_count)+' high risk'+(p.items||[]).map(i=>'<div class="it">#'+esc(i.evaluated_rank)+' '+esc(i.name)+' ('+esc(i.host)+') '+esc(i.risk_level)+' '+esc(i.risk_score)+'</div>').join('');
+ else if(e.event==='assistant_url_check')body=esc(p.host||p.name)+': '+esc(p.risk_level)+' (risk '+esc(p.risk_score)+')';
+ else if(e.event==='assistant_error')body=esc(p.error);
+ else if(e.event==='assistant_demo_scenarios')body='Synthetic risk demo shown: '+esc(p.count)+' invented listings'+(p.items||[]).map(i=>'<div class="it">'+esc(i.name)+' '+esc(i.risk_level)+' '+esc(i.risk_score)+'</div>').join('');
+ else if(e.event==='assistant_gate_decision')body=esc(p.name)+' ('+esc(p.host)+') '+esc(p.amount_inr)+': <b>'+esc(p.verdict)+'</b><div class="it">'+(p.reasons||[]).map(esc).join(' · ')+'</div>';
+ else if(e.event==='assistant_human_decision')body=(p.approved?'Approved':'Rejected')+' order '+esc(p.order_id);
+ else if(e.event==='wallet_debit')body='Demo debit ₹'+esc(p.amount_inr)+' · '+esc(p.name)+' · receipt '+esc(p.receipt);
+ else if(e.event==='wallet_refund')body='Demo refund ₹'+esc(p.amount_inr)+' · order '+esc(p.order_id);
+ else if(e.event==='assistant_order_blocked')body='Order '+esc(p.order_id)+' blocked: '+esc(p.reason);
+ else body=esc(p.reply);
+ return '<div class="ev"><span class="k '+cls+'">'+k+'</span>'+body+'<div class="t">#'+esc(e.seq)+' · '+esc(new Date(e.ts).toLocaleString())+' · hash '+esc((e.hash||'').slice(0,10))+'</div></div>'}
+async function openLog(){
+ const ov=document.getElementById('ov'),dlg=document.getElementById('dlg');dlg.innerHTML='<h3 id="ot">Assistant activity log</h3><p class="note">Loading…</p>';ov.classList.add('on');
+ try{const r=await fetch('/assistant/log?limit=100'),j=await r.json();
+  dlg.innerHTML='<h3 id="ot">Assistant activity log</h3><p class="note">'+j.total+' assistant events in the tamper-evident audit log (data/audit/purchases.jsonl). Chain: <b>'+(j.chain.valid?'intact':'BROKEN at #'+j.chain.first_bad_seq)+'</b> over '+j.chain.entries+' entries.</p><div class="lg">'+(j.events.length?j.events.map(evHtml).join(''):'<p class="note">Nothing yet. Send a message first.</p>')+'</div><div class="row"><button class="btn ghost" id="cx2">Close</button></div>';
+  document.getElementById('cx2').onclick=()=>ov.classList.remove('on')}
+ catch(e){dlg.innerHTML='<p class="note">Could not load the log.</p>'}}
+document.getElementById('logbtn').onclick=openLog;
+walletChip();
+</script></body></html>

@@ -1,0 +1,147 @@
+{
+  "label": "SIMULATED / method validation only",
+  "planted_recovery": [
+    {
+      "planted_beta": -3,
+      "measured_price_percentile": [
+        0.805,
+        0.793,
+        0.816
+      ]
+    },
+    {
+      "planted_beta": -1.5,
+      "measured_price_percentile": [
+        0.659,
+        0.644,
+        0.674
+      ]
+    },
+    {
+      "planted_beta": 0,
+      "measured_price_percentile": [
+        0.489,
+        0.472,
+        0.505
+      ]
+    },
+    {
+      "planted_beta": 1.5,
+      "measured_price_percentile": [
+        0.31,
+        0.295,
+        0.324
+      ]
+    },
+    {
+      "planted_beta": 3,
+      "measured_price_percentile": [
+        0.189,
+        0.178,
+        0.201
+      ]
+    },
+    {
+      "planted_beta": 4.5,
+      "measured_price_percentile": [
+        0.118,
+        0.109,
+        0.127
+      ]
+    }
+  ],
+  "beta_for_human_like_tilt_0.38": 0.72,
+  "power_at_planted_human_tilt": {
+    "30": 0.36,
+    "60": 0.59,
+    "123": 0.89,
+    "250": 0.993,
+    "500": 1.0
+  },
+  "real_sets_synthetic_quality": {
+    "status": "ok",
+    "n_sets": 108,
+    "label": "SIMULATED quality attributes on REAL human price sets",
+    "by_rho": {
+      "-0.4": {
+        "ranker_flat_price_fit": [
+          0.228,
+          0.188,
+          0.273
+        ],
+        "live_assistant_ranking": [
+          0.237,
+          0.197,
+          0.279
+        ],
+        "cheapest": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "uniform_random": [
+          0.457,
+          0.398,
+          0.512
+        ]
+      },
+      "0.0": {
+        "ranker_flat_price_fit": [
+          0.478,
+          0.419,
+          0.537
+        ],
+        "live_assistant_ranking": [
+          0.471,
+          0.411,
+          0.526
+        ],
+        "cheapest": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "uniform_random": [
+          0.461,
+          0.4,
+          0.516
+        ]
+      },
+      "0.4": {
+        "ranker_flat_price_fit": [
+          0.691,
+          0.645,
+          0.732
+        ],
+        "live_assistant_ranking": [
+          0.692,
+          0.643,
+          0.733
+        ],
+        "cheapest": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "uniform_random": [
+          0.505,
+          0.447,
+          0.561
+        ]
+      }
+    },
+    "humans_on_these_sets": {
+      "n": 108,
+      "price_percentile_mean": [
+        0.392,
+        0.335,
+        0.447
+      ],
+      "cheaper_than_median_rate": [
+        0.611,
+        0.519,
+        0.704
+      ]
+    }
+  }
+}

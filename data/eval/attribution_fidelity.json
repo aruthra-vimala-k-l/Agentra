@@ -1,0 +1,33 @@
+{
+ "queries_used": 12,
+ "instances(query x product)": 36,
+ "signals_tested": [
+  "price_fit",
+  "durability_match",
+  "occasion_match",
+  "review_influence",
+  "brand_preference",
+  "new_merchant_caution",
+  "nudge_exposure"
+ ],
+ "efficiency_max_abs_error": 0.0,
+ "shapley": {
+  "mean_abs_error": 0.006,
+  "mean_spearman": 1.0,
+  "top1_agreement": 1.0
+ },
+ "baseline_raw_signal_value": {
+  "mean_abs_error": 0.0119,
+  "mean_spearman": 1.0,
+  "top1_agreement": 1.0
+ },
+ "baseline_random_permutation": {
+  "mean_abs_error": 0.8246,
+  "mean_spearman": -0.029,
+  "top1_agreement": 0.028
+ },
+ "residual_on_synergy_pair_signals": 0.0208,
+ "residual_on_other_signals": 0.0,
+ "rank_change_when_top_signal_ablated(mean positions)": 116.611,
+ "rank_change_when_bottom_signal_ablated(mean positions)": 42.194
+}
